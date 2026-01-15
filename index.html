@@ -882,12 +882,11 @@
             });
         }
     </script>
-  <script type="module">
+ <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    // 1. CONFIGURAÇÕES DO SISTEMA PHONE PARTS
     const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
-    const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I'; 
+    const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I'; //
     const ntfyTopic = 'PhoneParts_leads'; 
 
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -910,35 +909,28 @@
         };
 
         try {
-            // A. SALVAR NO SUPABASE (Tabela que você criou via SQL)
-            const { data, error } = await supabase
-                .from('orcamentos_site') //
-                .insert([formData])
-                .select();
+            // Tenta salvar no banco primeiro
+            const { data, error } = await supabase.from('orcamentos_site').insert([formData]).select();
+            
+            if (error) {
+                console.error("Erro Supabase:", error);
+                throw new Error("Erro no Banco: " + error.message);
+            }
 
-            if (error) throw error;
-
-            // B. ENVIAR ALERTA PARA O CANAL NTFY (Seu celular)
+            // Tenta avisar no app ntfy
             await fetch(`https://ntfy.sh/${ntfyTopic}`, {
                 method: 'POST',
-                body: `Cliente: ${formData.nome}\n` +
-                      `Aparelho: ${formData.tipo_aparelho} ${formData.modelo}\n` +
-                      `Defeito: ${formData.defeito}\n` +
-                      `Contato: ${formData.whatsapp}`,
-                headers: {
-                    'Title': '🚀 NOVO ORÇAMENTO - PHONE PARTS',
-                    'Priority': 'high',
-                    'Tags': 'iphone,computer,wrench'
-                }
+                body: `Novo Lead!\nCliente: ${formData.nome}\nAparelho: ${formData.modelo}\nDefeito: ${formData.defeito}`,
+                headers: { 'Title': '🚀 PHONE PARTS' }
             });
 
-            // C. FEEDBACK DE SUCESSO NO SITE
-            alert("Orçamento enviado com sucesso! Nossa equipe entrará em contato em até 10 minutos.");
+            alert("Sucesso! Recebemos seu pedido.");
             document.getElementById('budgetForm').reset();
 
         } catch (err) {
-            console.error('Erro de integração:', err);
-            alert("Houve um erro técnico. Por favor, tente novamente ou nos chame no WhatsApp.");
+            // Aqui ele mostra o erro exato que está acontecendo
+            console.error('Erro detalhado:', err);
+            alert("Erro detectado: " + err.message);
         } finally {
             btn.disabled = false;
             btnText.innerText = "REGISTRAR E ORÇAR";
