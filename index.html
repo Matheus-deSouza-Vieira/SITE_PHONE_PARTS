@@ -882,13 +882,13 @@
             });
         }
     </script>
-   <script type="module">
+  <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    // 1. CONFIGURAÇÕES DO SISTEMA
+    // 1. CONFIGURAÇÕES DO SISTEMA PHONE PARTS
     const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
-    const supabaseKey = 'SUA_PUBLISHABLE_KEY_AQUI'; //
-    const ntfyTopic = 'PhoneParts_leads'; // O tópico que você configurou no app
+    const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I'; 
+    const ntfyTopic = 'PhoneParts_leads'; 
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -910,15 +910,15 @@
         };
 
         try {
-            // A. SALVAR NO SUPABASE (Tabela orcamentos_site)
+            // A. SALVAR NO SUPABASE (Tabela que você criou via SQL)
             const { data, error } = await supabase
-                .from('orcamentos_site')
+                .from('orcamentos_site') //
                 .insert([formData])
                 .select();
 
             if (error) throw error;
 
-            // B. ENVIAR ALERTA PARA O SEU CANAL (Ntfy)
+            // B. ENVIAR ALERTA PARA O CANAL NTFY (Seu celular)
             await fetch(`https://ntfy.sh/${ntfyTopic}`, {
                 method: 'POST',
                 body: `Cliente: ${formData.nome}\n` +
@@ -932,13 +932,13 @@
                 }
             });
 
-            // C. SUCESSO PARA O CLIENTE
-            alert("Orçamento enviado com sucesso! Nossa equipe entrará em contato em breve.");
+            // C. FEEDBACK DE SUCESSO NO SITE
+            alert("Orçamento enviado com sucesso! Nossa equipe entrará em contato em até 10 minutos.");
             document.getElementById('budgetForm').reset();
 
         } catch (err) {
             console.error('Erro de integração:', err);
-            alert("Houve um erro no sistema. Por favor, tente novamente.");
+            alert("Houve um erro técnico. Por favor, tente novamente ou nos chame no WhatsApp.");
         } finally {
             btn.disabled = false;
             btnText.innerText = "REGISTRAR E ORÇAR";
