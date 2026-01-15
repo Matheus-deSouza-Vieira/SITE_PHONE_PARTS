@@ -189,6 +189,13 @@
                 <span class="text-[10px] md:text-sm font-bold uppercase tracking-wide">Vendas</span>
             </button>
 
+            <button onclick="switchTab('vendas')" class="...">...</button>
+
+<button onclick="switchTab('orcamento')" class="tab-btn flex flex-col md:flex-row items-center md:px-6 py-3 gap-3 hover:bg-white/5 transition-all group w-full text-center md:text-left border-b md:border-b-0 border-gray-800/50">
+    <i data-lucide="clipboard-list" class="w-5 h-5 text-gray-400 group-hover:text-neon transition-colors"></i>
+    <span class="text-[10px] md:text-sm font-bold uppercase tracking-wide">Orçamento</span>
+</button>
+
             <button onclick="switchTab('location')" class="tab-btn flex flex-col md:flex-row items-center md:px-6 py-3 gap-3 hover:bg-white/5 transition-all group w-full text-center md:text-left">
                 <i data-lucide="map" class="w-5 h-5 text-gray-400 group-hover:text-neon transition-colors"></i>
                 <span class="text-[10px] md:text-sm font-bold uppercase tracking-wide">Local GPS</span>
@@ -694,6 +701,54 @@
 
     </main>
 
+    <section id="orcamento" class="tab-content hidden space-y-6">
+    <header class="flex items-center justify-between border-b border-border pb-4">
+        <div>
+            <h2 class="text-3xl font-display font-bold text-white uppercase">Abrir Chamado</h2>
+            <p class="text-xs text-neon font-bold tracking-wider">CADASTRO AUTOMÁTICO + ORÇAMENTO</p>
+        </div>
+        <i data-lucide="database-zap" class="w-10 h-10 text-gray-500"></i>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-panel border border-border p-6 rounded-lg shadow-lg relative z-10">
+            <form id="budgetForm" class="space-y-4">
+                <div class="border-b border-gray-800 pb-4 mb-4">
+                    <h4 class="text-neon text-xs font-bold uppercase mb-3">1. Seus Dados</h4>
+                    <input type="text" id="orc-name" required placeholder="Nome Completo" class="w-full bg-black/50 border border-gray-700 text-white p-3 mb-3 rounded-sm focus:border-neon focus:outline-none text-sm">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" id="orc-cpf" placeholder="CPF (Apenas números)" class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
+                        <input type="tel" id="orc-whatsapp" required placeholder="WhatsApp (DDD)" class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-neon text-xs font-bold uppercase mb-3">2. O Aparelho</h4>
+                    <div class="grid grid-cols-3 gap-4 mb-3">
+                        <select id="orc-type" class="bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
+                            <option value="Celular">Celular</option>
+                            <option value="Notebook">Notebook</option>
+                            <option value="Tablet">Tablet</option>
+                        </select>
+                        <input type="text" id="orc-model" required placeholder="Modelo (Ex: iPhone 13)" class="col-span-2 bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
+                    </div>
+                    <textarea id="orc-problem" required rows="3" placeholder="Descreva o defeito..." class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm resize-none"></textarea>
+                </div>
+                <button type="submit" id="btn-submit" class="w-full bg-neon text-black font-black uppercase py-4 rounded-sm hover:bg-white transition-all flex items-center justify-center gap-2">
+                    <span id="btn-text">REGISTRAR E ORÇAR</span>
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+        <div class="hidden lg:flex flex-col justify-center items-center text-center p-6 border border-border bg-[#151515] rounded-lg">
+            <div class="w-20 h-20 rounded-full bg-neon/10 flex items-center justify-center mb-6 animate-pulse">
+                <i data-lucide="clock" class="w-10 h-10 text-neon"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white uppercase mb-2">Resposta em 10 Min</h3>
+            <p class="text-gray-400 text-sm max-w-sm">Sistema integrado com nosso laboratório técnico.</p>
+        </div>
+    </div>
+</section>
+
     <script>
         lucide.createIcons();
 
@@ -827,5 +882,64 @@
             });
         }
     </script>
+    <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    // Dados do seu projeto PhonePartsDB
+    const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'
+    
+    // COLE AQUI a Publishable Key (sb_publishable...) da sua foto
+    const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I' 
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    // Lógica para salvar no banco e abrir o WhatsApp
+    document.getElementById('budgetForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-submit');
+        const btnText = document.getElementById('btn-text');
+        
+        btn.disabled = true;
+        btnText.innerText = "SALVANDO NO SISTEMA...";
+
+        const formData = {
+            nome: document.getElementById('orc-name').value,
+            cpf: document.getElementById('orc-cpf').value,
+            whatsapp: document.getElementById('orc-whatsapp').value,
+            tipo_aparelho: document.getElementById('orc-type').value,
+            modelo: document.getElementById('orc-model').value,
+            defeito: document.getElementById('orc-problem').value
+        };
+
+        try {
+            // Insere na tabela orcamentos_site que você criou com sucesso via SQL
+            const { data, error } = await supabase
+                .from('orcamentos_site')
+                .insert([formData])
+                .select();
+
+            if (error) throw error;
+
+            // Formatação da mensagem para os técnicos
+            const msg = `*NOVO ORÇAMENTO (ID: ${data[0].id})*%0A%0A` +
+                        `👤 *Cliente:* ${formData.nome}%0A` +
+                        `📱 *Contato:* ${formData.whatsapp}%0A` +
+                        `🛠 *Aparelho:* ${formData.modelo}%0A` +
+                        `⚠️ *Defeito:* ${formData.defeito}`;
+
+            // Abre o WhatsApp da loja
+            window.open(`https://wa.me/554830252210?text=${msg}`, '_blank');
+            
+        } catch (err) {
+            console.error('Erro:', err);
+            alert("Erro ao registrar. Abrindo WhatsApp direto...");
+            window.open(`https://wa.me/554830252210?text=Orçamento: ${formData.nome}`, '_blank');
+        } finally {
+            btn.disabled = false;
+            btnText.innerText = "REGISTRAR E ORÇAR";
+        }
+    });
+</script>
 </body>
+
 </html>
