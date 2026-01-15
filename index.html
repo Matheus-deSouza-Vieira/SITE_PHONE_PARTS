@@ -882,25 +882,23 @@
             });
         }
     </script>
-    <script type="module">
+   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    // Dados do seu projeto PhonePartsDB
-    const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'
-    
-    // COLE AQUI a Publishable Key (sb_publishable...) da sua foto
-    const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I' 
+    // 1. CONFIGURAÇÕES DO SISTEMA
+    const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
+    const supabaseKey = 'SUA_PUBLISHABLE_KEY_AQUI'; //
+    const ntfyTopic = 'PhoneParts_leads'; // O tópico que você configurou no app
 
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Lógica para salvar no banco e abrir o WhatsApp
     document.getElementById('budgetForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('btn-submit');
         const btnText = document.getElementById('btn-text');
         
         btn.disabled = true;
-        btnText.innerText = "SALVANDO NO SISTEMA...";
+        btnText.innerText = "REGISTRANDO...";
 
         const formData = {
             nome: document.getElementById('orc-name').value,
@@ -912,7 +910,7 @@
         };
 
         try {
-            // Insere na tabela orcamentos_site que você criou com sucesso via SQL
+            // A. SALVAR NO SUPABASE (Tabela orcamentos_site)
             const { data, error } = await supabase
                 .from('orcamentos_site')
                 .insert([formData])
@@ -920,26 +918,30 @@
 
             if (error) throw error;
 
-            // Formatação da mensagem para os técnicos
-            const msg = `*NOVO ORÇAMENTO (ID: ${data[0].id})*%0A%0A` +
-                        `👤 *Cliente:* ${formData.nome}%0A` +
-                        `📱 *Contato:* ${formData.whatsapp}%0A` +
-                        `🛠 *Aparelho:* ${formData.modelo}%0A` +
-                        `⚠️ *Defeito:* ${formData.defeito}`;
+            // B. ENVIAR ALERTA PARA O SEU CANAL (Ntfy)
+            await fetch(`https://ntfy.sh/${ntfyTopic}`, {
+                method: 'POST',
+                body: `Cliente: ${formData.nome}\n` +
+                      `Aparelho: ${formData.tipo_aparelho} ${formData.modelo}\n` +
+                      `Defeito: ${formData.defeito}\n` +
+                      `Contato: ${formData.whatsapp}`,
+                headers: {
+                    'Title': '🚀 NOVO ORÇAMENTO - PHONE PARTS',
+                    'Priority': 'high',
+                    'Tags': 'iphone,computer,wrench'
+                }
+            });
 
-            // Abre o WhatsApp da loja
-            window.open(`https://wa.me/554830252210?text=${msg}`, '_blank');
-            
+            // C. SUCESSO PARA O CLIENTE
+            alert("Orçamento enviado com sucesso! Nossa equipe entrará em contato em breve.");
+            document.getElementById('budgetForm').reset();
+
         } catch (err) {
-            console.error('Erro:', err);
-            alert("Erro ao registrar. Abrindo WhatsApp direto...");
-            window.open(`https://wa.me/554830252210?text=Orçamento: ${formData.nome}`, '_blank');
+            console.error('Erro de integração:', err);
+            alert("Houve um erro no sistema. Por favor, tente novamente.");
         } finally {
             btn.disabled = false;
             btnText.innerText = "REGISTRAR E ORÇAR";
         }
     });
 </script>
-</body>
-
-</html>
