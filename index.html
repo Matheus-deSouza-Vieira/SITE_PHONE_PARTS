@@ -882,9 +882,10 @@
             });
         }
     </script>
- <script type="module">
+<script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
+    // Configurações PhonePartsDB
     const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
     const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I'; //
     const ntfyTopic = 'PhoneParts_leads'; 
@@ -909,28 +910,29 @@
         };
 
         try {
-            // Tenta salvar no banco primeiro
-            const { data, error } = await supabase.from('orcamentos_site').insert([formData]).select();
-            
-            if (error) {
-                console.error("Erro Supabase:", error);
-                throw new Error("Erro no Banco: " + error.message);
-            }
+            // 1. Salva no Supabase
+            // Removemos o .select() para evitar conflitos de RLS por enquanto
+            const { error } = await supabase
+                .from('orcamentos_site')
+                .insert([formData]);
 
-            // Tenta avisar no app ntfy
+            if (error) throw new Error("Erro no Banco: " + error.message);
+
+            // 2. Envia para o ntfy (Seu alerta no celular)
+            // Usamos um formato simples para garantir que a rede não bloqueie
             await fetch(`https://ntfy.sh/${ntfyTopic}`, {
                 method: 'POST',
-                body: `Novo Lead!\nCliente: ${formData.nome}\nAparelho: ${formData.modelo}\nDefeito: ${formData.defeito}`,
-                headers: { 'Title': '🚀 PHONE PARTS' }
+                body: `Cliente: ${formData.nome}\nAparelho: ${formData.modelo}\nDefeito: ${formData.defeito}\nTel: ${formData.whatsapp}`,
+                headers: { 'Title': '🚀 NOVO ORÇAMENTO - PHONE PARTS' }
             });
 
-            alert("Sucesso! Recebemos seu pedido.");
+            alert("Sucesso! Sua solicitação foi registrada e o técnico avisado.");
             document.getElementById('budgetForm').reset();
 
         } catch (err) {
-            // Aqui ele mostra o erro exato que está acontecendo
-            console.error('Erro detalhado:', err);
-            alert("Erro detectado: " + err.message);
+            console.error('Erro:', err);
+            // Agora ele vai te dizer EXATAMENTE qual é o erro na tela
+            alert("Atenção: " + err.message);
         } finally {
             btn.disabled = false;
             btnText.innerText = "REGISTRAR E ORÇAR";
