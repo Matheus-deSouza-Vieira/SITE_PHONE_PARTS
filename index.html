@@ -885,7 +885,7 @@
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    // Configurações PhonePartsDB
+    // Use exatamente estes dados que conferi nas suas fotos
     const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
     const supabaseKey = 'sb_publishable__GF9Okd6V3dUKYoWxrgt2w_8Iix3i3I'; //
     const ntfyTopic = 'PhoneParts_leads'; 
@@ -898,7 +898,7 @@
         const btnText = document.getElementById('btn-text');
         
         btn.disabled = true;
-        btnText.innerText = "REGISTRANDO...";
+        btnText.innerText = "CONECTANDO...";
 
         const formData = {
             nome: document.getElementById('orc-name').value,
@@ -910,29 +910,30 @@
         };
 
         try {
-            // 1. Salva no Supabase
-            // Removemos o .select() para evitar conflitos de RLS por enquanto
-            const { error } = await supabase
-                .from('orcamentos_site')
-                .insert([formData]);
+            // Tentativa 1: Salvar no Banco
+            const { data, error } = await supabase.from('orcamentos_site').insert([formData]).select();
+            
+            if (error) throw new Error("Erro Supabase: " + error.message);
 
-            if (error) throw new Error("Erro no Banco: " + error.message);
+            // Tentativa 2: Notificar no Celular (ntfy)
+            // Se o ntfy falhar, o banco já salvou, então avisamos o usuário
+            try {
+                await fetch(`https://ntfy.sh/${ntfyTopic}`, {
+                    method: 'POST',
+                    body: `Cliente: ${formData.nome}\nAparelho: ${formData.modelo}\nDefeito: ${formData.defeito}`,
+                    headers: { 'Title': '🚀 NOVO ORÇAMENTO' }
+                });
+            } catch (ntfyErr) {
+                console.warn("Aviso no celular falhou, mas o banco salvou.");
+            }
 
-            // 2. Envia para o ntfy (Seu alerta no celular)
-            // Usamos um formato simples para garantir que a rede não bloqueie
-            await fetch(`https://ntfy.sh/${ntfyTopic}`, {
-                method: 'POST',
-                body: `Cliente: ${formData.nome}\nAparelho: ${formData.modelo}\nDefeito: ${formData.defeito}\nTel: ${formData.whatsapp}`,
-                headers: { 'Title': '🚀 NOVO ORÇAMENTO - PHONE PARTS' }
-            });
-
-            alert("Sucesso! Sua solicitação foi registrada e o técnico avisado.");
+            alert("Sucesso! Orçamento registrado no sistema.");
             document.getElementById('budgetForm').reset();
 
         } catch (err) {
-            console.error('Erro:', err);
-            // Agora ele vai te dizer EXATAMENTE qual é o erro na tela
-            alert("Atenção: " + err.message);
+            console.error('Erro detalhado:', err);
+            // Isso vai mostrar se o erro é URL errada ou bloqueio de rede
+            alert("Atenção: " + err.message + ". Verifique se há algum AdBlock ativo.");
         } finally {
             btn.disabled = false;
             btnText.innerText = "REGISTRAR E ORÇAR";
