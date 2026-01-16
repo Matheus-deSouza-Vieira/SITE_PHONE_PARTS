@@ -701,51 +701,50 @@
 
     </main>
 
-    <section id="orcamento" class="tab-content hidden space-y-6">
-    <header class="flex items-center justify-between border-b border-border pb-4">
-        <div>
-            <h2 class="text-3xl font-display font-bold text-white uppercase">Abrir Chamado</h2>
-            <p class="text-xs text-neon font-bold tracking-wider">CADASTRO AUTOMÁTICO + ORÇAMENTO</p>
-        </div>
-        <i data-lucide="database-zap" class="w-10 h-10 text-gray-500"></i>
+  <section id="orcamento" class="tab-content hidden w-full px-4 py-6 space-y-6 overflow-x-hidden">
+    <header class="border-b border-border pb-4">
+        <h2 class="text-2xl md:text-3xl font-display font-bold text-white uppercase break-words">Abrir Chamado</h2>
+        <p class="text-[10px] text-neon font-bold tracking-wider uppercase">Cadastro Automático + Orçamento</p>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="bg-panel border border-border p-6 rounded-lg shadow-lg relative z-10">
-            <form id="budgetForm" class="space-y-4">
-                <div class="border-b border-gray-800 pb-4 mb-4">
-                    <h4 class="text-neon text-xs font-bold uppercase mb-3">1. Seus Dados</h4>
-                    <input type="text" id="orc-name" required placeholder="Nome Completo" class="w-full bg-black/50 border border-gray-700 text-white p-3 mb-3 rounded-sm focus:border-neon focus:outline-none text-sm">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="orc-cpf" placeholder="CPF (Apenas números)" class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
-                        <input type="tel" id="orc-whatsapp" required placeholder="WhatsApp (DDD)" class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
-                    </div>
+    <div class="w-full max-w-4xl mx-auto">
+        <form id="budgetForm" class="space-y-6 bg-panel border border-border p-5 rounded-lg shadow-2xl">
+            
+            <div class="space-y-4">
+                <h4 class="text-neon text-xs font-bold uppercase border-b border-gray-800 pb-2">1. Seus Dados</h4>
+                <input type="text" id="orc-name" required placeholder="Nome Completo" 
+                    class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded-md focus:border-neon outline-none text-base">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="orc-cpf" placeholder="CPF (Opcional)" 
+                        class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded-md focus:border-neon outline-none text-base">
+                    <input type="tel" id="orc-whatsapp" required placeholder="WhatsApp com DDD" 
+                        class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded-md focus:border-neon outline-none text-base">
                 </div>
-                <div>
-                    <h4 class="text-neon text-xs font-bold uppercase mb-3">2. O Aparelho</h4>
-                    <div class="grid grid-cols-3 gap-4 mb-3">
-                        <select id="orc-type" class="bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
-                            <option value="Celular">Celular</option>
-                            <option value="Notebook">Notebook</option>
-                            <option value="Tablet">Tablet</option>
-                        </select>
-                        <input type="text" id="orc-model" required placeholder="Modelo (Ex: iPhone 13)" class="col-span-2 bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm">
-                    </div>
-                    <textarea id="orc-problem" required rows="3" placeholder="Descreva o defeito..." class="w-full bg-black/50 border border-gray-700 text-white p-3 rounded-sm focus:border-neon focus:outline-none text-sm resize-none"></textarea>
-                </div>
-                <button type="submit" id="btn-submit" class="w-full bg-neon text-black font-black uppercase py-4 rounded-sm hover:bg-white transition-all flex items-center justify-center gap-2">
-                    <span id="btn-text">REGISTRAR E ORÇAR</span>
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-            </form>
-        </div>
-        <div class="hidden lg:flex flex-col justify-center items-center text-center p-6 border border-border bg-[#151515] rounded-lg">
-            <div class="w-20 h-20 rounded-full bg-neon/10 flex items-center justify-center mb-6 animate-pulse">
-                <i data-lucide="clock" class="w-10 h-10 text-neon"></i>
             </div>
-            <h3 class="text-2xl font-bold text-white uppercase mb-2">Resposta em 10 Min</h3>
-            <p class="text-gray-400 text-sm max-w-sm">Sistema integrado com nosso laboratório técnico.</p>
-        </div>
+
+            <div class="space-y-4 pt-2">
+                <h4 class="text-neon text-xs font-bold uppercase border-b border-gray-800 pb-2">2. O Aparelho</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <select id="orc-type" class="w-full bg-black/60 border border-gray-700 text-white p-4 rounded-md focus:border-neon outline-none text-base">
+                        <option value="Celular">Celular</option>
+                        <option value="Notebook">Notebook</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                    <input type="text" id="orc-model" required placeholder="Modelo (Ex: iPhone 13)" 
+                        class="md:col-span-2 w-full bg-black/40 border border-gray-700 text-white p-4 rounded-md focus:border-neon outline-none text-base">
+                </div>
+                <textarea id="orc-problem" required rows="4" placeholder="Descreva o defeito detalhadamente..." 
+                    class="w-full bg-black/40 border border-gray-700 text-white p-4 rounded-md focus:border-neon outline-none text-base resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit" 
+                class="w-full bg-neon text-black font-black uppercase py-5 rounded-md hover:bg-white transition-all active:scale-95 flex items-center justify-center gap-3 text-lg">
+                <span id="btn-text">REGISTRAR E ORÇAR</span>
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+        </form>
     </div>
 </section>
 
@@ -940,4 +939,5 @@
         }
     });
 </script>
+
 
