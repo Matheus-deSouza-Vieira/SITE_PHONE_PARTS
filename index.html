@@ -701,63 +701,51 @@
 
     </main>
     <section id="orcamento" class="tab-content hidden w-full px-4 py-6">
-    <div class="max-w-lg mx-auto">
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold text-white uppercase">Abrir Chamado</h2>
-            <p class="text-neon text-xs font-bold">CADASTRO DE ORÇAMENTO</p>
-        </div>
+    <div class="mb-6">
+        <h2 class="text-2xl font-display font-bold text-white uppercase leading-tight">Abrir Chamado</h2>
+        <p class="text-[10px] text-[#FF5E00] font-bold tracking-wider uppercase">Cadastro Automático + Orçamento</p>
+    </div>
 
+    <div class="max-w-xl mx-auto">
         <form id="budgetForm" class="flex flex-col gap-4">
             
-            <div class="flex flex-col gap-1">
-                <label class="text-gray-400 text-xs uppercase ml-1">Nome Completo</label>
-                <input type="text" id="orc-name" required placeholder="Ex: Matheus Vieira" 
-                    class="w-full bg-panel border border-border text-white p-4 rounded-lg outline-none focus:border-neon">
+            <div class="space-y-3">
+                <span class="text-[#FF5E00] text-[10px] font-bold uppercase tracking-widest">1. Seus Dados</span>
+                <input type="text" id="orc-name" required placeholder="Nome Completo" 
+                    class="w-full bg-black/40 border border-gray-800 text-white p-4 rounded-md focus:border-[#FF5E00] outline-none">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input type="text" id="orc-cpf" placeholder="CPF (Apenas números)" 
+                        class="w-full bg-black/40 border border-gray-800 text-white p-4 rounded-md focus:border-[#FF5E00] outline-none">
+                    <input type="tel" id="orc-whatsapp" required placeholder="WhatsApp (DDD)" 
+                        class="w-full bg-black/40 border border-gray-800 text-white p-4 rounded-md focus:border-[#FF5E00] outline-none">
+                </div>
             </div>
 
-            <div class="flex flex-col gap-1">
-                <label class="text-gray-400 text-xs uppercase ml-1">CPF (Opcional)</label>
-                <input type="text" id="orc-cpf" placeholder="Apenas números" 
-                    class="w-full bg-panel border border-border text-white p-4 rounded-lg outline-none focus:border-neon">
-            </div>
+            <div class="space-y-3 pt-2">
+                <span class="text-[#FF5E00] text-[10px] font-bold uppercase tracking-widest">2. O Aparelho</span>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <select id="orc-type" class="w-full bg-black/60 border border-gray-800 text-white p-4 rounded-md outline-none">
+                        <option value="Celular">Celular</option>
+                        <option value="Notebook">Notebook</option>
+                        <option value="Tablet">Tablet</option>
+                    </select>
+                    <input type="text" id="orc-model" required placeholder="Modelo (Ex: iPhone 13)" 
+                        class="md:col-span-2 w-full bg-black/40 border border-gray-800 text-white p-4 rounded-md focus:border-[#FF5E00] outline-none">
+                </div>
 
-            <div class="flex flex-col gap-1">
-                <label class="text-gray-400 text-xs uppercase ml-1">WhatsApp</label>
-                <input type="tel" id="orc-whatsapp" required placeholder="(48) 99999-9999" 
-                    class="w-full bg-panel border border-border text-white p-4 rounded-lg outline-none focus:border-neon">
-            </div>
-
-            <div class="flex flex-col gap-1">
-                <label class="text-gray-400 text-xs uppercase ml-1">Tipo de Aparelho</label>
-                <select id="orc-type" class="w-full bg-panel border border-border text-white p-4 rounded-lg outline-none focus:border-neon appearance-none">
-                    <option value="Celular">Celular</option>
-                    <option value="Notebook">Notebook</option>
-                    <option value="Tablet">Tablet</option>
-                    <option value="Outro">Outro</option>
-                </select>
-            </div>
-
-            <div class="flex flex-col gap-1">
-                <label class="text-gray-400 text-xs uppercase ml-1">Modelo do Aparelho</label>
-                <input type="text" id="orc-model" required placeholder="Ex: iPhone 13 Pro" 
-                    class="w-full bg-panel border border-border text-white p-4 rounded-lg outline-none focus:border-neon">
-            </div>
-
-            <div class="flex flex-col gap-1">
-                <label class="text-gray-400 text-xs uppercase ml-1">Defeito Reclamado</label>
-                <textarea id="orc-problem" required rows="3" placeholder="Descreva o que aconteceu..." 
-                    class="w-full bg-panel border border-border text-white p-4 rounded-lg outline-none focus:border-neon resize-none"></textarea>
+                <textarea id="orc-problem" required rows="3" placeholder="Descreva o defeito..." 
+                    class="w-full bg-black/40 border border-gray-800 text-white p-4 rounded-md focus:border-[#FF5E00] outline-none resize-none"></textarea>
             </div>
 
             <button type="submit" id="btn-submit" 
-                class="w-full bg-neon text-black font-black py-5 rounded-lg mt-2 uppercase tracking-widest active:scale-95 transition-transform">
-                <span id="btn-text">FINALIZAR E ENVIAR</span>
+                class="w-full bg-[#FF5E00] text-black font-black uppercase py-5 mt-2 rounded-md hover:brightness-110 active:scale-95 transition-all">
+                <span id="btn-text">REGISTRAR E ORÇAR</span>
             </button>
-
         </form>
     </div>
 </section>
- 
 
 
         lucide.createIcons();
@@ -950,6 +938,7 @@
         }
     });
 </script>
+
 
 
 
