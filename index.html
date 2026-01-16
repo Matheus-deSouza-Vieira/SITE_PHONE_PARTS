@@ -410,7 +410,15 @@
               try {
                   // Inserir no Supabase
                   const { error: dbError } = await supabase.from('orcamentos').insert([data]);
-                  if (dbError) throw new Error(`Erro Supabase: ${dbError.message}`);
+                  
+                  if (dbError) {
+                      console.error('Erro detalhado do Supabase:', dbError);
+                      let msg = 'Erro ao salvar no banco de dados.';
+                      if (dbError.code === 'PGRST116') msg = 'Tabela "orcamentos" não encontrada. Verifique se criou a tabela no SQL Editor.';
+                      if (dbError.code === '42P01') msg = 'Tabela "orcamentos" não existe no Supabase.';
+                      if (dbError.code === '42501') msg = 'Permissão negada (RLS). Verifique se habilitou a política de inserção pública.';
+                      throw new Error(msg);
+                  }
 
                   // Enviar notificação para ntfy.sh
                   const notificationText = `🚀 NOVO ORÇAMENTO\n\n` +
@@ -422,18 +430,18 @@
                       `${data.cpf ? `📋 CPF: ${data.cpf}\n` : ''}` +
                       `⏰ Data: ${new Date().toLocaleString('pt-BR')}`;
 
-                  const ntfyResponse = await fetch('https://ntfy.sh/PhoneParts_leads', {
-                      method: 'POST',
-                      body: notificationText,
-                      headers: { 
-                          'Title': '🚀 Nova Solicitação - Phone Parts',
-                          'Priority': 'high',
-                          'Tags': 'iphone,moneybag,alert'
-                      }
-                  });
-
-                  if (!ntfyResponse.ok) {
-                      console.warn('Aviso: Notificação ntfy.sh não foi enviada, mas dados foram salvos.');
+                  try {
+                      await fetch('https://ntfy.sh/PhoneParts_leads', {
+                          method: 'POST',
+                          body: notificationText,
+                          headers: { 
+                              'Title': '🚀 Nova Solicitação - Phone Parts',
+                              'Priority': 'high',
+                              'Tags': 'iphone,moneybag,alert'
+                          }
+                      });
+                  } catch (ntfyErr) {
+                      console.warn('Aviso: Notificação ntfy.sh falhou, mas os dados foram salvos no banco.', ntfyErr);
                   }
 
                   // Mostrar mensagem de sucesso
@@ -441,8 +449,8 @@
                   successMessage.classList.remove('hidden');
 
               } catch (error) {
-                  console.error('Erro:', error);
-                  alert('Erro ao enviar orçamento. Por favor, tente novamente ou entre em contato via WhatsApp: (48) 3025-2210');
+                  console.error('Erro na submissão:', error);
+                  alert(`⚠️ ${error.message}\n\nSe o erro persistir, chame no WhatsApp: (48) 3025-2210`);
               } finally {
                   btnEnviar.disabled = false;
                   btnText.innerText = 'ENVIAR SOLICITAÇÃO';
