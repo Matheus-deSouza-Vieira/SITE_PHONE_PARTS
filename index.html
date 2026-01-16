@@ -378,7 +378,7 @@
 
       updateVisitorCounter();
 
-      // 2. ORÇAMENTO LOGIC - INTEGRADO COM SUPABASE E NTFY.SH
+      // 2. ORÇAMENTO LOGIC - CORREÇÃO DEFINITIVA NTFY
       const form = document.getElementById('orcamentoForm');
       const btnEnviar = document.getElementById('btnEnviar');
       const btnText = document.getElementById('btnText');
@@ -408,43 +408,30 @@
               };
 
               try {
-                  // Inserir no Supabase
+                  // 1. Inserir no Supabase
                   const { error: dbError } = await supabase.from('orcamentos').insert([data]);
-                  
-                  if (dbError) {
-                      console.error('Erro detalhado do Supabase:', dbError);
-                      let msg = 'Erro ao salvar no banco de dados.';
-                      if (dbError.code === 'PGRST116') msg = 'Tabela "orcamentos" não encontrada. Verifique se criou a tabela no SQL Editor.';
-                      if (dbError.code === '42P01') msg = 'Tabela "orcamentos" não existe no Supabase.';
-                      if (dbError.code === '42501') msg = 'Permissão negada (RLS). Verifique se habilitou a política de inserção pública.';
-                      throw new Error(msg);
-                  }
+                  if (dbError) throw new Error(`Erro no Banco: ${dbError.message}`);
 
-                  // Enviar notificação para ntfy.sh
-                  const notificationText = `🚀 NOVO ORÇAMENTO\n\n` +
-                      `👤 Cliente: ${data.nome}\n` +
-                      `📱 Aparelho: ${data.tipo_aparelho}\n` +
-                      `🔧 Modelo: ${data.marca_modelo}\n` +
-                      `⚠️ Defeito: ${data.defeito}\n` +
-                      `☎️ Telefone: ${data.telefone}\n` +
-                      `${data.cpf ? `📋 CPF: ${data.cpf}\n` : ''}` +
-                      `⏰ Data: ${new Date().toLocaleString('pt-BR')}`;
+                  // 2. Enviar para ntfy.sh (Método PUT simplificado)
+                  const ntfyUrl = 'https://ntfy.sh/PhoneParts_leads';
+                  const message = `NOVO ORCAMENTO\n\nCliente: ${data.nome}\nAparelho: ${data.tipo_aparelho}\nModelo: ${data.marca_modelo}\nDefeito: ${data.defeito}\nTel: ${data.telefone}`;
 
                   try {
-                      await fetch('https://ntfy.sh/PhoneParts_leads', {
-                          method: 'POST',
-                          body: notificationText,
-                          headers: { 
-                              'Title': '🚀 Nova Solicitação - Phone Parts',
-                              'Priority': 'high',
-                              'Tags': 'iphone,moneybag,alert'
+                      // Usando PUT e cabeçalhos mínimos para evitar bloqueio CORS
+                      await fetch(ntfyUrl, {
+                          method: 'PUT',
+                          body: message,
+                          headers: {
+                              'Title': 'Nova Solicitacao Phone Parts',
+                              'Priority': 'urgent',
+                              'Tags': 'iphone,moneybag'
                           }
                       });
                   } catch (ntfyErr) {
-                      console.warn('Aviso: Notificação ntfy.sh falhou, mas os dados foram salvos no banco.', ntfyErr);
+                      console.warn('Erro ntfy:', ntfyErr);
                   }
 
-                  // Mostrar mensagem de sucesso
+                  // 3. Sucesso
                   form.classList.add('hidden');
                   successMessage.classList.remove('hidden');
 
