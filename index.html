@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
-        window.tailwind.config = {
+        tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
@@ -33,19 +33,13 @@
                         'scan': 'scan 3s linear infinite',
                     },
                     keyframes: {
-                        blink: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0.5' },
-                        },
+                        blink: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.5' } },
                         warp: {
                             '0%': { opacity: '1', transform: 'scale(1)', filter: 'hue-rotate(0deg)' },
                             '50%': { opacity: '0.8', transform: 'scale(0.98)', filter: 'hue-rotate(90deg) blur(2px)' },
                             '100%': { opacity: '1', transform: 'scale(1)', filter: 'hue-rotate(0deg)' }
                         },
-                        scan: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100%)' }
-                        }
+                        scan: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(100%)' } }
                     }
                 }
             }
@@ -125,34 +119,16 @@
         .cyber-input:focus { border-color: #FF5E00; box-shadow: 0 0 8px rgba(255, 94, 0, 0.2); }
         .cyber-label { display: block; color: #FF5E00; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.1em; }
 
-        /* Estilo Radar Inovador */
+        /* Radar Animação */
         .radar-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            border: 2px solid rgba(255, 94, 0, 0.2);
-            border-radius: 50%;
-            overflow: hidden;
+            position: relative; width: 180px; height: 180px;
+            border: 2px solid rgba(255, 94, 0, 0.2); border-radius: 50%;
             background: radial-gradient(circle, rgba(255, 94, 0, 0.05) 0%, transparent 70%);
         }
         .radar-sweep {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: conic-gradient(from 0deg, transparent 0%, rgba(255, 94, 0, 0.4) 100%);
-            transform-origin: top left;
-            animation: spin 4s linear infinite;
-        }
-        .radar-dot {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #FF5E00;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #FF5E00;
-            animation: blink 1.5s infinite;
+            border-radius: 50%; animation: spin 4s linear infinite;
         }
     </style>
 </head>
@@ -306,49 +282,28 @@
                     <button type="submit" id="btnEnviar" class="w-full bg-neon text-black font-black py-4 uppercase tracking-widest hover:bg-white transition-colors shadow-[0_0_20px_rgba(255,94,0,0.4)] flex justify-center items-center gap-2"><span id="btnText">ENVIAR SOLICITAÇÃO</span><i data-lucide="send" class="w-4 h-4"></i></button>
                 </form>
                 
-                <!-- TELA DE SUCESSO REESTRUTURADA -->
+                <!-- TELA DE SUCESSO -->
                 <div id="successMessage" class="hidden absolute inset-0 bg-panel z-20 flex flex-col items-center justify-center text-center p-6 md:p-12 animate-fade-in overflow-y-auto">
                     <div class="radar-container mb-8">
                         <div class="radar-sweep"></div>
-                        <div class="radar-dot" style="top: 30%; left: 40%;"></div>
-                        <div class="radar-dot" style="top: 60%; left: 70%; animation-delay: 0.5s;"></div>
-                        <div class="radar-dot" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <i data-lucide="check-circle" class="w-16 h-16 text-neon animate-pulse"></i>
                         </div>
                     </div>
-                    
                     <div class="space-y-4 max-w-2xl">
-                        <h3 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tighter">
-                            Solicitação <span class="text-neon">Processada</span>
-                        </h3>
-                        
+                        <h3 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tighter">Solicitação <span class="text-neon">Processada</span></h3>
                         <div class="bg-black/40 border-y border-neon/20 py-6 px-4 backdrop-blur-sm">
                             <p class="text-gray-400 text-sm md:text-base font-mono uppercase tracking-widest mb-2">Status do Sistema: <span class="text-green-500">Online</span></p>
-                            <p class="text-white text-xl md:text-2xl font-bold">
-                                Nossos técnicos já foram notificados.
-                            </p>
+                            <p class="text-white text-xl md:text-2xl font-bold">Nossos técnicos já foram notificados.</p>
                             <div class="mt-6 flex flex-col items-center">
-                                <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden mb-2">
-                                    <div class="h-full bg-neon animate-scan w-1/2"></div>
-                                </div>
-                                <p class="text-neon font-black text-2xl md:text-3xl animate-pulse tracking-tighter">
-                                    RESPOSTA EM ATÉ 20 MINUTOS
-                                </p>
+                                <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden mb-2"><div class="h-full bg-neon animate-scan w-1/2"></div></div>
+                                <p class="text-neon font-black text-2xl md:text-3xl animate-pulse tracking-tighter">RESPOSTA EM ATÉ 20 MINUTOS</p>
                             </div>
                         </div>
-                        
-                        <p class="text-gray-500 text-xs md:text-sm italic">
-                            Aguarde o contato via WhatsApp ou ligação.
-                        </p>
-                        
-                        <button onclick="resetForm()" class="mt-8 inline-flex items-center gap-2 text-xs text-gray-400 hover:text-neon transition-colors border border-gray-800 px-4 py-2 rounded uppercase font-bold">
-                            <i data-lucide="refresh-cw" class="w-3 h-3"></i> Nova Solicitação
-                        </button>
+                        <button onclick="location.reload()" class="mt-8 inline-flex items-center gap-2 text-xs text-gray-400 hover:text-neon transition-colors border border-gray-800 px-4 py-2 rounded uppercase font-bold">Voltar ao Início</button>
                     </div>
                 </div>
             </div>
-            <div class="h-24 md:hidden"></div>
         </section>
 
         <!-- 3. CELULARES -->
@@ -451,21 +406,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (window.lucide) {
-                window.lucide.createIcons();
-            }
+            if (window.lucide) window.lucide.createIcons();
 
             const supabaseUrl = 'https://rgkxplbvlermpfvvhxqq.supabase.co';
             const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJna3hwbGJ2bGVybXBmdnZoeHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzE1MDMsImV4cCI6MjA4Mzk0NzUwM30.-QjYsddysonxd5Wa0KUGe7hl59Vkg1-TjFwbe6wYo4s';
-            
-            if (window.supabase) {
-                const { createClient } = window.supabase;
-                window.supabaseClient = createClient(supabaseUrl, supabaseKey);
-                updateVisitorCounter();
-            }
+            if (window.supabase) window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
             initCircuitCanvas();
             initCarousel();
+            updateVisitorCounter();
         });
 
         function switchTab(tabId) {
@@ -513,13 +462,12 @@
         document.addEventListener('submit', async function(e) {
             if (e.target && e.target.id === 'orcamentoForm') {
                 e.preventDefault();
-                const form = e.target;
                 const btnEnviar = document.getElementById('btnEnviar');
                 const btnText = document.getElementById('btnText');
                 const successMessage = document.getElementById('successMessage');
 
                 btnEnviar.disabled = true;
-                btnText.innerText = 'ENVIANDO DADOS...';
+                btnText.innerText = 'PROCESSANDO...';
 
                 const data = {
                     nome: document.getElementById('nome').value,
@@ -532,70 +480,20 @@
                 };
 
                 try {
-                    if (!window.supabaseClient) throw new Error("Supabase não carregado");
-                    
-                    const { error: dbError } = await window.supabaseClient.from('orcamentos').insert([data]);
-                    if (dbError) throw new Error(`Erro no Banco: ${dbError.message}`);
+                    await window.supabaseClient.from('orcamentos').insert([data]);
+                    const msg = encodeURIComponent(`NOVO LEAD: ${data.nome}\n${data.marca_modelo}\nDefeito: ${data.defeito}\nWhatsApp: ${data.telefone}`);
+                    await fetch(`https://ntfy.sh/PhoneParts_leads/publish?message=${msg}&priority=urgent&tags=iphone`, { method: 'GET', mode: 'no-cors' });
 
-                    const title = encodeURIComponent('Nova Solicitacao Phone Parts');
-                    const message = encodeURIComponent(`Cliente: ${data.nome}\nAparelho: ${data.tipo_aparelho}\nModelo: ${data.marca_modelo}\nDefeito: ${data.defeito}\nTel: ${data.telefone}`);
-                    const ntfyUrl = `https://ntfy.sh/PhoneParts_leads/publish?message=${message}&title=${title}&priority=urgent&tags=iphone,moneybag`;
-
-                    try {
-                        await fetch(ntfyUrl, { method: 'GET', mode: 'no-cors' });
-                    } catch (ntfyErr) {
-                        console.warn('Erro ntfy:', ntfyErr);
-                    }
-
-                    form.classList.add('hidden');
+                    document.getElementById('orcamentoForm').classList.add('hidden');
                     successMessage.classList.remove('hidden');
-
-                } catch (error) {
-                    console.error('Erro na submissão:', error);
-                    alert(`⚠️ ${error.message}\n\nSe o erro persistir, chame no WhatsApp: (48) 3025-2210`);
+                } catch (err) {
+                    alert('Erro ao enviar. Tente pelo WhatsApp!');
                 } finally {
                     btnEnviar.disabled = false;
                     btnText.innerText = 'ENVIAR SOLICITAÇÃO';
                 }
             }
         });
-
-        function resetForm() {
-            const form = document.getElementById('orcamentoForm');
-            const successMessage = document.getElementById('successMessage');
-            form.reset();
-            successMessage.classList.add('hidden');
-            form.classList.remove('hidden');
-        }
-
-        async function updateVisitorCounter() {
-            const counterEl = document.getElementById('visit-counter-desktop');
-            if (!counterEl || !window.supabaseClient) return;
-            
-            try {
-                let { data: stats, error } = await window.supabaseClient
-                    .from('site_stats')
-                    .select('visitors')
-                    .eq('id', 1)
-                    .single();
-
-                if (error && error.code === 'PGRST116') {
-                    await window.supabaseClient.from('site_stats').insert([{ id: 1, visitors: 24500 }]);
-                    stats = { visitors: 24500 };
-                }
-
-                if (!sessionStorage.getItem('visited')) {
-                    const newCount = (stats?.visitors || 24500) + 1;
-                    await window.supabaseClient.from('site_stats').update({ visitors: newCount }).eq('id', 1);
-                    sessionStorage.setItem('visited', 'true');
-                    counterEl.innerText = newCount.toLocaleString('pt-BR', { minimumIntegerDigits: 5, useGrouping: true }).replace(',','.');
-                } else {
-                    counterEl.innerText = (stats?.visitors || 24500).toLocaleString('pt-BR', { minimumIntegerDigits: 5, useGrouping: true }).replace(',','.');
-                }
-            } catch (err) {
-                counterEl.innerText = "24.500"; 
-            }
-        }
 
         function initCarousel() {
             const images = document.querySelectorAll('.carousel-img');
@@ -609,6 +507,18 @@
             }
         }
 
+        async function updateVisitorCounter() {
+            const counterEl = document.getElementById('visit-counter-desktop');
+            if (!counterEl || !window.supabaseClient) return;
+            try {
+                let { data: stats } = await window.supabaseClient.from('site_stats').select('visitors').eq('id', 1).single();
+                const count = stats?.visitors || 24500;
+                counterEl.innerText = count.toLocaleString('pt-BR', { minimumIntegerDigits: 5 }).replace(',','.');
+            } catch (err) {
+                counterEl.innerText = "24.500";
+            }
+        }
+
         function initCircuitCanvas() {
             const canvas = document.getElementById('circuitCanvas');
             if(!canvas) return;
@@ -617,38 +527,22 @@
             let height = canvas.height = canvas.parentElement.offsetHeight;
             const points = [];
             for(let i = 0; i < 15; i++) {
-                points.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5
-                });
+                points.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
             }
             function draw() {
                 ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
                 ctx.fillRect(0, 0, width, height);
                 ctx.strokeStyle = 'rgba(255, 94, 0, 0.1)';
-                ctx.lineWidth = 1;
                 points.forEach((p, i) => {
-                    p.x += p.vx;
-                    p.y += p.vy;
+                    p.x += p.vx; p.y += p.vy;
                     if(p.x < 0 || p.x > width) p.vx *= -1;
                     if(p.y < 0 || p.y > height) p.vy *= -1;
                     ctx.fillStyle = 'rgba(255, 94, 0, 0.2)';
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fill();
                     points.forEach((p2, j) => {
                         if(i < j) {
-                            const dx = p.x - p2.x;
-                            const dy = p.y - p2.y;
-                            const dist = Math.sqrt(dx*dx + dy*dy);
-                            if(dist < 150) {
-                                ctx.beginPath();
-                                ctx.moveTo(p.x, p.y);
-                                ctx.lineTo(p2.x, p2.y);
-                                ctx.stroke();
-                            }
+                            const dx = p.x - p2.x, dy = p.y - p2.y, dist = Math.sqrt(dx*dx + dy*dy);
+                            if(dist < 150) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
                         }
                     });
                 });
