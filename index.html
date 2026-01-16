@@ -652,6 +652,57 @@
         </section>
 
     </main>
+    <section id="orcamento" class="tab-content hidden w-full px-4 py-8 animate-in fade-in duration-500">
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-8 border-l-4 border-[#FF5E00] pl-4">
+            <h2 class="text-3xl font-display font-bold text-white uppercase tracking-tighter">Abrir Chamado</h2>
+            <p class="text-[10px] text-[#FF5E00] font-black uppercase tracking-[0.2em]">Phone Parts | Automação de Orçamentos</p>
+        </header>
+
+        <form id="budgetForm" class="space-y-6 bg-black/40 border border-white/10 p-6 rounded-xl backdrop-blur-sm">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] text-gray-400 uppercase font-bold">Nome do Cliente</label>
+                    <input type="text" id="orc-name" required placeholder="Ex: Matheus Vieira" 
+                        class="w-full bg-white/5 border border-white/10 text-white p-4 rounded-lg focus:border-[#FF5E00] outline-none transition-all">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] text-gray-400 uppercase font-bold">WhatsApp (DDD)</label>
+                    <input type="tel" id="orc-whatsapp" required placeholder="(48) 9XXXX-XXXX" 
+                        class="w-full bg-white/5 border border-white/10 text-white p-4 rounded-lg focus:border-[#FF5E00] outline-none transition-all">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] text-gray-400 uppercase font-bold">Tipo</label>
+                    <select id="orc-type" class="w-full bg-black border border-white/10 text-white p-4 rounded-lg outline-none focus:border-[#FF5E00]">
+                        <option value="Celular">Celular</option>
+                        <option value="Notebook">Notebook</option>
+                        <option value="Tablet">Tablet</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2 space-y-2">
+                    <label class="text-[10px] text-gray-400 uppercase font-bold">Modelo do Aparelho</label>
+                    <input type="text" id="orc-model" required placeholder="Ex: iPhone 13 Pro Max" 
+                        class="w-full bg-white/5 border border-white/10 text-white p-4 rounded-lg focus:border-[#FF5E00] outline-none transition-all">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] text-gray-400 uppercase font-bold">Relato do Defeito</label>
+                <textarea id="orc-problem" required rows="4" placeholder="Descreva o problema detalhadamente..." 
+                    class="w-full bg-white/5 border border-white/10 text-white p-4 rounded-lg focus:border-[#FF5E00] outline-none resize-none transition-all"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit" 
+                class="w-full bg-[#FF5E00] text-black font-black py-5 rounded-lg hover:bg-white transition-all active:scale-95 uppercase tracking-widest flex items-center justify-center gap-3">
+                <span id="btn-text">REGISTRAR CHAMADO</span>
+            </button>
+        </form>
+    </div>
+</section>
 
     <script type="module">
       // ... FIREBASE CONFIG PLACEHOLDER FOR GITHUB ...
@@ -810,3 +861,4 @@
     </script>
 </body>
 </html>
+
