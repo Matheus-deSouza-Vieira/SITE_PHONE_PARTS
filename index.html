@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PHONE PARTS | Interface de Sistema</title>
     
-    <!-- Scripts carregados de forma síncrona para evitar erros no GitHub Pages -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
-        // Configuração do Tailwind
         window.tailwind.config = {
             theme: {
                 extend: {
@@ -32,6 +30,7 @@
                         'spin-reverse': 'spin 15s linear infinite reverse',
                         'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
                         'warp': 'warp 0.3s ease-in-out',
+                        'scan': 'scan 3s linear infinite',
                     },
                     keyframes: {
                         blink: {
@@ -42,6 +41,10 @@
                             '0%': { opacity: '1', transform: 'scale(1)', filter: 'hue-rotate(0deg)' },
                             '50%': { opacity: '0.8', transform: 'scale(0.98)', filter: 'hue-rotate(90deg) blur(2px)' },
                             '100%': { opacity: '1', transform: 'scale(1)', filter: 'hue-rotate(0deg)' }
+                        },
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' }
                         }
                     }
                 }
@@ -121,6 +124,36 @@
         }
         .cyber-input:focus { border-color: #FF5E00; box-shadow: 0 0 8px rgba(255, 94, 0, 0.2); }
         .cyber-label { display: block; color: #FF5E00; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.1em; }
+
+        /* Estilo Radar Inovador */
+        .radar-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(255, 94, 0, 0.2);
+            border-radius: 50%;
+            overflow: hidden;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.05) 0%, transparent 70%);
+        }
+        .radar-sweep {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg, transparent 0%, rgba(255, 94, 0, 0.4) 100%);
+            transform-origin: top left;
+            animation: spin 4s linear infinite;
+        }
+        .radar-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FF5E00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #FF5E00;
+            animation: blink 1.5s infinite;
+        }
     </style>
 </head>
 <body class="text-gray-100 font-mono bg-grid h-screen w-screen flex flex-col md:flex-row main-layout">
@@ -264,15 +297,56 @@
             <header class="flex items-center justify-between border-b border-border pb-4">
                 <div><h2 class="text-3xl font-display font-bold text-white uppercase">Solicitar Orçamento</h2><p class="text-xs text-neon font-bold tracking-wider">PREENCHA PARA ATENDIMENTO RÁPIDO</p></div><i data-lucide="file-text" class="w-10 h-10 text-gray-500"></i>
             </header>
-            <div class="bg-panel border border-border p-6 md:p-10 rounded-lg shadow-2xl relative overflow-hidden">
-                <form id="orcamentoForm" class="relative z-10 max-w-3xl mx-auto space-y-6">
+            <div class="bg-panel border border-border p-6 md:p-10 rounded-lg shadow-2xl relative overflow-hidden min-h-[500px] flex items-center justify-center">
+                <form id="orcamentoForm" class="relative z-10 w-full max-w-3xl mx-auto space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="cyber-label">NOME COMPLETO</label><input type="text" id="nome" required class="cyber-input" placeholder="Seu nome"></div><div><label class="cyber-label">CPF (Opcional)</label><input type="text" id="cpf" class="cyber-input" placeholder="000.000.000-00"></div></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="cyber-label">TELEFONE (WhatsApp)</label><input type="tel" id="telefone" required class="cyber-input" placeholder="(48) 99999-9999"></div><div><label class="cyber-label">TIPO DE APARELHO</label><select id="tipo" class="cyber-input bg-[#0a0a0a]"><option value="Celular">Celular</option><option value="Notebook">Notebook</option><option value="Tablet">Tablet/iPad</option><option value="Outro">Outro</option></select></div></div>
                     <div><label class="cyber-label">MARCA E MODELO</label><input type="text" id="modelo" required class="cyber-input" placeholder="Ex: iPhone 11, Samsung S20..."></div>
                     <div><label class="cyber-label">DEFEITO / PROBLEMA</label><textarea id="defeito" required rows="4" class="cyber-input" placeholder="Descreva o que está acontecendo..."></textarea></div>
                     <button type="submit" id="btnEnviar" class="w-full bg-neon text-black font-black py-4 uppercase tracking-widest hover:bg-white transition-colors shadow-[0_0_20px_rgba(255,94,0,0.4)] flex justify-center items-center gap-2"><span id="btnText">ENVIAR SOLICITAÇÃO</span><i data-lucide="send" class="w-4 h-4"></i></button>
                 </form>
-                <div id="successMessage" class="hidden absolute inset-0 bg-panel z-20 flex flex-col items-center justify-center text-center p-8 animate-fade-in"><div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6"><i data-lucide="check" class="w-10 h-10 text-green-500"></i></div><h3 class="text-3xl font-display font-bold text-white mb-2">SOLICITAÇÃO ENVIADA!</h3><p class="text-gray-400 max-w-md">Recebemos seus dados com sucesso.</p><p class="text-neon font-bold text-lg mt-4 animate-pulse">Você será respondido em até 20 minutos.</p><button onclick="resetForm()" class="mt-8 text-xs text-gray-500 underline hover:text-white">Enviar outro orçamento</button></div>
+                
+                <!-- TELA DE SUCESSO REESTRUTURADA -->
+                <div id="successMessage" class="hidden absolute inset-0 bg-panel z-20 flex flex-col items-center justify-center text-center p-6 md:p-12 animate-fade-in overflow-y-auto">
+                    <div class="radar-container mb-8">
+                        <div class="radar-sweep"></div>
+                        <div class="radar-dot" style="top: 30%; left: 40%;"></div>
+                        <div class="radar-dot" style="top: 60%; left: 70%; animation-delay: 0.5s;"></div>
+                        <div class="radar-dot" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="check-circle" class="w-16 h-16 text-neon animate-pulse"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 max-w-2xl">
+                        <h3 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tighter">
+                            Solicitação <span class="text-neon">Processada</span>
+                        </h3>
+                        
+                        <div class="bg-black/40 border-y border-neon/20 py-6 px-4 backdrop-blur-sm">
+                            <p class="text-gray-400 text-sm md:text-base font-mono uppercase tracking-widest mb-2">Status do Sistema: <span class="text-green-500">Online</span></p>
+                            <p class="text-white text-xl md:text-2xl font-bold">
+                                Nossos técnicos já foram notificados.
+                            </p>
+                            <div class="mt-6 flex flex-col items-center">
+                                <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden mb-2">
+                                    <div class="h-full bg-neon animate-scan w-1/2"></div>
+                                </div>
+                                <p class="text-neon font-black text-2xl md:text-3xl animate-pulse tracking-tighter">
+                                    RESPOSTA EM ATÉ 20 MINUTOS
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-500 text-xs md:text-sm italic">
+                            Aguarde o contato via WhatsApp ou ligação.
+                        </p>
+                        
+                        <button onclick="resetForm()" class="mt-8 inline-flex items-center gap-2 text-xs text-gray-400 hover:text-neon transition-colors border border-gray-800 px-4 py-2 rounded uppercase font-bold">
+                            <i data-lucide="refresh-cw" class="w-3 h-3"></i> Nova Solicitação
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="h-24 md:hidden"></div>
         </section>
@@ -375,16 +449,12 @@
 
     </main>
 
-    <!-- Scripts movidos para o final do body para garantir que o DOM esteja pronto -->
     <script>
-        // Inicialização Global
         document.addEventListener('DOMContentLoaded', function() {
-            // Inicializar Ícones
             if (window.lucide) {
                 window.lucide.createIcons();
             }
 
-            // Inicializar Supabase
             const supabaseUrl = 'https://rgkxplbvlermpfvvhxqq.supabase.co';
             const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJna3hwbGJ2bGVybXBmdnZoeHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzE1MDMsImV4cCI6MjA4Mzk0NzUwM30.-QjYsddysonxd5Wa0KUGe7hl59Vkg1-TjFwbe6wYo4s';
             
@@ -394,12 +464,10 @@
                 updateVisitorCounter();
             }
 
-            // Inicializar Canvas e Carrossel
             initCircuitCanvas();
             initCarousel();
         });
 
-        // Funções de Navegação
         function switchTab(tabId) {
             const mainContainer = document.getElementById('mainDisplay');
             mainContainer.classList.add('cyber-transition');
@@ -442,7 +510,6 @@
             document.getElementById('map-' + locId).classList.remove('hidden');
         }
 
-        // Lógica de Orçamento
         document.addEventListener('submit', async function(e) {
             if (e.target && e.target.id === 'orcamentoForm') {
                 e.preventDefault();
@@ -501,7 +568,6 @@
             form.classList.remove('hidden');
         }
 
-        // Funções Auxiliares
         async function updateVisitorCounter() {
             const counterEl = document.getElementById('visit-counter-desktop');
             if (!counterEl || !window.supabaseClient) return;
