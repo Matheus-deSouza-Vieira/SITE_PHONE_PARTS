@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PHONE PARTS | Interface de Sistema</title>
     
+    <!-- Scripts carregados de forma síncrona para evitar erros no GitHub Pages -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
-        tailwind.config = {
+        // Configuração do Tailwind
+        window.tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
@@ -93,7 +95,6 @@
         .hud-ring-2 { border: 2px solid transparent; border-top: 2px solid #FF5E00; border-bottom: 2px solid #FF5E00; border-radius: 50%; }
         .cyber-transition { animation: warp 0.3s ease-in-out; }
 
-        /* CARROSSEL FIXED STYLE */
         .carousel-img {
             transition: opacity 1s ease-in-out, transform 4s ease-in-out;
             opacity: 0;
@@ -248,7 +249,6 @@
                         <p class="text-gray-300 text-sm mb-6 leading-relaxed font-medium">Nosso curso te ensinará do básico até reparos simples em placas utilizando <strong class="text-white">Micro-soldagem!</strong><br><br>Além do conhecimento e experiência que você irá adquirir, você ainda garante um <strong class="text-neon">CERTIFICADO</strong> de conclusão.</p>
                         <a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20quero%20saber%20mais%20sobre%20o%20Curso%20T%C3%A9cnico." target="_blank" class="mt-4 inline-flex w-fit items-center gap-3 bg-white text-black font-bold px-8 py-3 hover:bg-neon hover:text-white transition-all uppercase text-sm shadow-lg shadow-white/10 hover:shadow-neon/50 rounded-sm">Garantir Minha Vaga <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
                     </div>
-                    <!-- CARROSSEL FIXADO -->
                     <div class="relative min-h-[300px] border-t lg:border-t-0 lg:border-l border-border bg-[#151515] overflow-hidden" id="carouselContainer">
                         <img src="fotos/jmicro.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover active" alt="Microscópio">
                         <img src="fotos/lab.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover" alt="Laboratório">
@@ -375,134 +375,58 @@
 
     </main>
 
-    <script type="module">
-      const supabaseUrl = 'https://rgkxplbvlermpfvvhxqq.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJna3hwbGJ2bGVybXBmdnZoeHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzE1MDMsImV4cCI6MjA4Mzk0NzUwM30.-QjYsddysonxd5Wa0KUGe7hl59Vkg1-TjFwbe6wYo4s';
-      
-      const { createClient } = window.supabase;
-      const supabase = createClient(supabaseUrl, supabaseKey);
-
-      // 1. CONTADOR DE VISITAS REAL
-      async function updateVisitorCounter() {
-          const counterEl = document.getElementById('visit-counter-desktop');
-          
-          try {
-              let { data: stats, error } = await supabase
-                  .from('site_stats')
-                  .select('visitors')
-                  .eq('id', 1)
-                  .single();
-
-              if (error && error.code === 'PGRST116') {
-                  await supabase.from('site_stats').insert([{ id: 1, visitors: 24500 }]);
-                  stats = { visitors: 24500 };
-              }
-
-              if (!sessionStorage.getItem('visited')) {
-                  const newCount = (stats?.visitors || 24500) + 1;
-                  await supabase
-                      .from('site_stats')
-                      .update({ visitors: newCount })
-                      .eq('id', 1);
-                  
-                  sessionStorage.setItem('visited', 'true');
-                  if(counterEl) counterEl.innerText = newCount.toLocaleString('pt-BR', { minimumIntegerDigits: 5, useGrouping: true }).replace(',','.');
-              } else {
-                  if(counterEl) counterEl.innerText = (stats?.visitors || 24500).toLocaleString('pt-BR', { minimumIntegerDigits: 5, useGrouping: true }).replace(',','.');
-              }
-
-          } catch (err) {
-              console.error("Erro contador:", err);
-              if(counterEl) counterEl.innerText = "24.500"; 
-          }
-      }
-
-      updateVisitorCounter();
-
-      // 2. ORÇAMENTO LOGIC - VERSÃO COMPATIBILIDADE NTFY
-      const form = document.getElementById('orcamentoForm');
-      const btnEnviar = document.getElementById('btnEnviar');
-      const btnText = document.getElementById('btnText');
-      const successMessage = document.getElementById('successMessage');
-
-      window.resetForm = function() {
-          form.reset();
-          successMessage.classList.add('hidden');
-          form.classList.remove('hidden');
-      }
-
-      if(form) {
-          form.addEventListener('submit', async (e) => {
-              e.preventDefault();
-              
-              btnEnviar.disabled = true;
-              btnText.innerText = 'ENVIANDO DADOS...';
-
-              const data = {
-                  nome: document.getElementById('nome').value,
-                  cpf: document.getElementById('cpf').value || null,
-                  telefone: document.getElementById('telefone').value,
-                  tipo_aparelho: document.getElementById('tipo').value,
-                  marca_modelo: document.getElementById('modelo').value,
-                  defeito: document.getElementById('defeito').value,
-                  created_at: new Date().toISOString()
-              };
-
-              try {
-                  // 1. Inserir no Supabase
-                  const { error: dbError } = await supabase.from('orcamentos').insert([data]);
-                  if (dbError) throw new Error(`Erro no Banco: ${dbError.message}`);
-
-                  // 2. Enviar para ntfy.sh (Método de compatibilidade total via URL)
-                  const title = encodeURIComponent('Nova Solicitacao Phone Parts');
-                  const message = encodeURIComponent(`Cliente: ${data.nome}\nAparelho: ${data.tipo_aparelho}\nModelo: ${data.marca_modelo}\nDefeito: ${data.defeito}\nTel: ${data.telefone}`);
-                  const ntfyUrl = `https://ntfy.sh/PhoneParts_leads/publish?message=${message}&title=${title}&priority=urgent&tags=iphone,moneybag`;
-
-                  try {
-                      await fetch(ntfyUrl, { method: 'GET', mode: 'no-cors' });
-                  } catch (ntfyErr) {
-                      console.warn('Erro ntfy:', ntfyErr);
-                  }
-
-                  // 3. Sucesso
-                  form.classList.add('hidden');
-                  successMessage.classList.remove('hidden');
-
-              } catch (error) {
-                  console.error('Erro na submissão:', error);
-                  alert(`⚠️ ${error.message}\n\nSe o erro persistir, chame no WhatsApp: (48) 3025-2210`);
-              } finally {
-                  btnEnviar.disabled = false;
-                  btnText.innerText = 'ENVIAR SOLICITAÇÃO';
-              }
-          });
-      }
-    </script>
-
+    <!-- Scripts movidos para o final do body para garantir que o DOM esteja pronto -->
     <script>
-        lucide.createIcons();
+        // Inicialização Global
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar Ícones
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
 
+            // Inicializar Supabase
+            const supabaseUrl = 'https://rgkxplbvlermpfvvhxqq.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJna3hwbGJ2bGVybXBmdnZoeHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzE1MDMsImV4cCI6MjA4Mzk0NzUwM30.-QjYsddysonxd5Wa0KUGe7hl59Vkg1-TjFwbe6wYo4s';
+            
+            if (window.supabase) {
+                const { createClient } = window.supabase;
+                window.supabaseClient = createClient(supabaseUrl, supabaseKey);
+                updateVisitorCounter();
+            }
+
+            // Inicializar Canvas e Carrossel
+            initCircuitCanvas();
+            initCarousel();
+        });
+
+        // Funções de Navegação
         function switchTab(tabId) {
             const mainContainer = document.getElementById('mainDisplay');
             mainContainer.classList.add('cyber-transition');
+            
             setTimeout(() => {
                 document.querySelectorAll('.tab-btn').forEach(btn => {
                     btn.classList.remove('active');
                     const icon = btn.querySelector('i');
                     if(icon) icon.classList.remove('text-neon');
                 });
+                
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.add('hidden');
                 });
+                
                 const buttons = document.querySelectorAll(`button[onclick="switchTab('${tabId}')"]`);
                 buttons.forEach(btn => {
                      btn.classList.add('active');
                      const icon = btn.querySelector('i');
                      if(icon) icon.classList.add('text-neon');
                 });
+                
                 const selectedContent = document.getElementById(tabId);
                 if(selectedContent) selectedContent.classList.remove('hidden');
+                
                 if (tabId === 'home') initCircuitCanvas();
+                
                 setTimeout(() => mainContainer.classList.remove('cyber-transition'), 100);
             }, 150);
         }
@@ -518,8 +442,96 @@
             document.getElementById('map-' + locId).classList.remove('hidden');
         }
 
-        window.onload = function() {
-            initCircuitCanvas();
+        // Lógica de Orçamento
+        document.addEventListener('submit', async function(e) {
+            if (e.target && e.target.id === 'orcamentoForm') {
+                e.preventDefault();
+                const form = e.target;
+                const btnEnviar = document.getElementById('btnEnviar');
+                const btnText = document.getElementById('btnText');
+                const successMessage = document.getElementById('successMessage');
+
+                btnEnviar.disabled = true;
+                btnText.innerText = 'ENVIANDO DADOS...';
+
+                const data = {
+                    nome: document.getElementById('nome').value,
+                    cpf: document.getElementById('cpf').value || null,
+                    telefone: document.getElementById('telefone').value,
+                    tipo_aparelho: document.getElementById('tipo').value,
+                    marca_modelo: document.getElementById('modelo').value,
+                    defeito: document.getElementById('defeito').value,
+                    created_at: new Date().toISOString()
+                };
+
+                try {
+                    if (!window.supabaseClient) throw new Error("Supabase não carregado");
+                    
+                    const { error: dbError } = await window.supabaseClient.from('orcamentos').insert([data]);
+                    if (dbError) throw new Error(`Erro no Banco: ${dbError.message}`);
+
+                    const title = encodeURIComponent('Nova Solicitacao Phone Parts');
+                    const message = encodeURIComponent(`Cliente: ${data.nome}\nAparelho: ${data.tipo_aparelho}\nModelo: ${data.marca_modelo}\nDefeito: ${data.defeito}\nTel: ${data.telefone}`);
+                    const ntfyUrl = `https://ntfy.sh/PhoneParts_leads/publish?message=${message}&title=${title}&priority=urgent&tags=iphone,moneybag`;
+
+                    try {
+                        await fetch(ntfyUrl, { method: 'GET', mode: 'no-cors' });
+                    } catch (ntfyErr) {
+                        console.warn('Erro ntfy:', ntfyErr);
+                    }
+
+                    form.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error('Erro na submissão:', error);
+                    alert(`⚠️ ${error.message}\n\nSe o erro persistir, chame no WhatsApp: (48) 3025-2210`);
+                } finally {
+                    btnEnviar.disabled = false;
+                    btnText.innerText = 'ENVIAR SOLICITAÇÃO';
+                }
+            }
+        });
+
+        function resetForm() {
+            const form = document.getElementById('orcamentoForm');
+            const successMessage = document.getElementById('successMessage');
+            form.reset();
+            successMessage.classList.add('hidden');
+            form.classList.remove('hidden');
+        }
+
+        // Funções Auxiliares
+        async function updateVisitorCounter() {
+            const counterEl = document.getElementById('visit-counter-desktop');
+            if (!counterEl || !window.supabaseClient) return;
+            
+            try {
+                let { data: stats, error } = await window.supabaseClient
+                    .from('site_stats')
+                    .select('visitors')
+                    .eq('id', 1)
+                    .single();
+
+                if (error && error.code === 'PGRST116') {
+                    await window.supabaseClient.from('site_stats').insert([{ id: 1, visitors: 24500 }]);
+                    stats = { visitors: 24500 };
+                }
+
+                if (!sessionStorage.getItem('visited')) {
+                    const newCount = (stats?.visitors || 24500) + 1;
+                    await window.supabaseClient.from('site_stats').update({ visitors: newCount }).eq('id', 1);
+                    sessionStorage.setItem('visited', 'true');
+                    counterEl.innerText = newCount.toLocaleString('pt-BR', { minimumIntegerDigits: 5, useGrouping: true }).replace(',','.');
+                } else {
+                    counterEl.innerText = (stats?.visitors || 24500).toLocaleString('pt-BR', { minimumIntegerDigits: 5, useGrouping: true }).replace(',','.');
+                }
+            } catch (err) {
+                counterEl.innerText = "24.500"; 
+            }
+        }
+
+        function initCarousel() {
             const images = document.querySelectorAll('.carousel-img');
             let currentIndex = 0;
             if(images.length > 0) {
