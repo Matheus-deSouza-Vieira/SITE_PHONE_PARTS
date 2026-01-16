@@ -481,7 +481,7 @@
 
                 try {
                     await window.supabaseClient.from('orcamentos').insert([data]);
-                    const msg = encodeURIComponent(`NOVO LEAD: ${data.nome}\n${data.marca_modelo}\nDefeito: ${data.defeito}\nWhatsApp: ${data.telefone}`);
+                    const msg = encodeURIComponent(`NOVA LEAD\nNome: ${data.nome}\nCPF: ${data.cpf || 'Não informado'}\nTelefone: ${data.telefone}\nAparelho: ${data.marca_modelo}\nDefeito: ${data.defeito}`);
                     await fetch(`https://ntfy.sh/PhoneParts_leads/publish?message=${msg}&priority=urgent&tags=iphone`, { method: 'GET', mode: 'no-cors' });
 
                     document.getElementById('orcamentoForm').classList.add('hidden');
