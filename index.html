@@ -182,156 +182,197 @@
             <a href="https://wa.me/554830252210" target="_blank" class="w-full flex items-center justify-center gap-2 bg-neon hover:bg-white hover:text-black text-black font-bold py-3 rounded uppercase text-xs transition-all shadow-lg shadow-neon/20 hover:shadow-neon/40">
                 <i data-lucide="message-circle" class="w-4 h-4"></i> FALE CONOSCO
             </a>
+            <div class="flex items-center gap-2 mt-4 justify-center">
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <span class="text-[10px] text-gray-500 font-bold">v29.1 // ONLINE</span>
+            </div>
         </div>
     </nav>
 
-    <main id="mainDisplay" class="flex-1 overflow-hidden flex flex-col">
-        <div class="content-area cyber-scroll overflow-y-auto flex-1 p-6 md:p-12 bg-grid">
-
-            <!-- 1. HOME -->
-            <section id="home" class="tab-content space-y-8">
-                <canvas id="circuitCanvas" class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"></canvas>
-                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-                    <div class="relative h-96 hidden lg:flex items-center justify-center">
-                        <div class="absolute inset-0 hud-ring-2 animate-spin-slow"></div>
-                        <div class="absolute inset-20 hud-ring animate-spin-reverse"></div>
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-neon/20 rounded-full animate-ping-slow"></div>
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-neon rounded-full shadow-[0_0_20px_#FF5E00]"></div>
+    <main id="mainDisplay" class="content-area relative flex-1 h-full bg-[#0d0d0d] cyber-scroll overflow-y-auto p-4 md:p-10 pt-24 md:pt-10">
+        
+        <!-- 1. HOME -->
+        <section id="home" class="tab-content space-y-8">
+            <div class="border border-border bg-panel/50 p-8 relative overflow-hidden group min-h-[400px] flex flex-col justify-center rounded-lg shadow-2xl">
+                <canvas id="circuitCanvas" class="absolute inset-0 w-full h-full z-0 opacity-30 pointer-events-none"></canvas>
+                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/4 w-96 h-96 z-0 pointer-events-none opacity-30 md:opacity-50 hidden md:block">
+                    <div class="absolute inset-0 hud-ring animate-spin-slow"></div>
+                    <div class="absolute inset-10 hud-ring-2 animate-spin-reverse"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-neon/20 rounded-full animate-ping-slow"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-neon rounded-full shadow-[0_0_20px_#FF5E00]"></div>
+                </div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-2 h-2 bg-neon rounded-full animate-ping"></span>
+                        <p class="text-neon text-xs font-bold tracking-[0.3em] uppercase">Você achou a melhor assitência de Floripa</p>
                     </div>
-                    <div class="relative z-10">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="w-2 h-2 bg-neon rounded-full animate-ping"></span>
-                            <p class="text-neon text-xs font-bold tracking-[0.3em] uppercase">Você achou a melhor assitência de Floripa</p>
-                        </div>
-                        <h2 class="text-5xl md:text-7xl font-display font-black text-white mb-6 uppercase tracking-tighter drop-shadow-lg">
-                            Manutenções & <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon via-white to-neon animate-pulse">Reparos Avançados</span>
-                        </h2>
-                        <p class="max-w-xl text-gray-300 mb-10 text-sm md:text-lg leading-relaxed font-medium border-l-4 border-neon pl-6 backdrop-blur-sm bg-black/30 py-2 rounded-r">
-                            Consertos de celulares e Notebook com profissionais especializados desde 1999, acessórios, peças, serviços de mão de obra com menor custo benefício, e ainda venda de celulares e Notebook usados, revisados e com garantia venha fazer seu orçamento sem compromisso!
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <button onclick="switchTab('orcamento')" class="inline-flex items-center gap-3 bg-neon text-black font-black px-8 py-4 hover:bg-white transition-all uppercase text-sm rounded-sm shadow-[0_0_20px_rgba(255,94,0,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] transform hover:-translate-y-1">
-                                <i data-lucide="file-text" class="w-5 h-5"></i> Solicitar Orçamento
-                            </button>
-                            <a href="#location" onclick="switchTab('location')" class="inline-flex items-center gap-3 border border-gray-500 text-white font-bold px-8 py-4 hover:border-neon hover:text-neon hover:bg-neon/10 transition-all uppercase text-sm rounded-sm backdrop-blur-md">
-                                <i data-lucide="map-pin" class="w-5 h-5"></i> Localização
-                            </a>
-                        </div>
+                    <h2 class="text-5xl md:text-7xl font-display font-black text-white mb-6 uppercase tracking-tighter drop-shadow-lg">
+                        Manutenções & <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon via-white to-neon animate-pulse">Reparos Avançados</span>
+                    </h2>
+                    <p class="max-w-xl text-gray-300 mb-10 text-sm md:text-lg leading-relaxed font-medium border-l-4 border-neon pl-6 backdrop-blur-sm bg-black/30 py-2 rounded-r">
+                        Consertos de celulares e Notebook com profissionais especializados desde 1999, acessórios, peças, serviços de mão de obra com menor custo benefício, e ainda venda de celulares e Notebook usados, revisados e com garantia venha fazer seu orçamento sem compromisso!
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="switchTab('orcamento')" class="inline-flex items-center gap-3 bg-neon text-black font-black px-8 py-4 hover:bg-white transition-all uppercase text-sm rounded-sm shadow-[0_0_20px_rgba(255,94,0,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] transform hover:-translate-y-1">
+                            <i data-lucide="file-text" class="w-5 h-5"></i> Solicitar Orçamento
+                        </button>
+                        <a href="#location" onclick="switchTab('location')" class="inline-flex items-center gap-3 border border-gray-500 text-white font-bold px-8 py-4 hover:border-neon hover:text-neon hover:bg-neon/10 transition-all uppercase text-sm rounded-sm backdrop-blur-md">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i> Localização
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
+                <div class="border border-border bg-panel p-6 hover:border-neon transition-colors rounded-lg shadow-lg group">
+                    <div class="flex justify-between items-start mb-4"><i data-lucide="zap" class="text-neon w-6 h-6 group-hover:animate-pulse"></i><span class="text-xs text-gray-500 font-bold tracking-wider">VELOCIDADE</span></div>
+                    <h3 class="text-white font-bold text-xl mb-1">Express 40min</h3><p class="text-xs text-gray-400">Trocas de tela e bateria em tempo recorde.</p>
+                </div>
+                <div class="border border-border bg-panel p-6 hover:border-neon transition-colors rounded-lg shadow-lg group">
+                    <div class="flex justify-between items-start mb-4"><i data-lucide="shield-check" class="text-neon w-6 h-6 group-hover:animate-pulse"></i><span class="text-xs text-gray-500 font-bold tracking-wider">SEGURANÇA</span></div>
+                    <h3 class="text-white font-bold text-xl mb-1">Garantia Estendida</h3><p class="text-xs text-gray-400">90 dias de cobertura total em peças.</p>
+                </div>
+                <div class="border border-border bg-panel p-6 hover:border-neon transition-colors rounded-lg shadow-lg group">
+                    <div class="flex justify-between items-start mb-4"><i data-lucide="calendar-clock" class="text-neon w-6 h-6 group-hover:animate-pulse"></i><span class="text-xs text-gray-500 font-bold tracking-wider">HISTÓRIA</span></div>
+                    <h3 class="text-white font-bold text-xl mb-1">+25 Anos</h3><p class="text-xs text-gray-400">Tradição e confiança desde 1999 em Florianópolis.</p>
+                </div>
+            </div>
+
+            <div class="relative mt-8 border-2 border-dashed border-neon/30 bg-panel overflow-hidden hover:border-neon transition-all duration-500 group rounded-lg">
+                <div class="absolute top-0 right-0 bg-neon text-black text-[10px] font-bold px-4 py-1 font-display uppercase z-20 rounded-bl-lg">Academy Module</div>
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-8 flex flex-col justify-center relative z-10">
+                        <div class="flex items-center gap-2 mb-4"><span class="w-2 h-2 bg-neon rounded-full animate-ping"></span><span class="text-neon text-xs font-bold tracking-widest uppercase">Inscrições Abertas</span></div>
+                        <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4 uppercase leading-none">Curso Técnico de <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-yellow-400">Manutenção</span></h2>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed font-medium">Nosso curso te ensinará do básico até reparos simples em placas utilizando <strong class="text-white">Micro-soldagem!</strong><br><br>Além do conhecimento e experiência que você irá adquirir, você ainda garante um <strong class="text-neon">CERTIFICADO</strong> de conclusão.</p>
+                        <a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20quero%20saber%20mais%20sobre%20o%20Curso%20T%C3%A9cnico." target="_blank" class="mt-4 inline-flex w-fit items-center gap-3 bg-white text-black font-bold px-8 py-3 hover:bg-neon hover:text-white transition-all uppercase text-sm shadow-lg shadow-white/10 hover:shadow-neon/50 rounded-sm">Garantir Minha Vaga <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                    <!-- CARROSSEL FIXADO -->
+                    <div class="relative min-h-[300px] border-t lg:border-t-0 lg:border-l border-border bg-[#151515] overflow-hidden" id="carouselContainer">
+                        <img src="fotos/jmicro.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover active" alt="Microscópio">
+                        <img src="fotos/lab.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover" alt="Laboratório">
+                        <img src="fotos/certificado.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover" alt="Certificado">
+                        <div class="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-panel to-transparent pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ORÇAMENTO -->
+        <section id="orcamento" class="tab-content hidden space-y-6">
+            <header class="flex items-center justify-between border-b border-border pb-4">
+                <div><h2 class="text-3xl font-display font-bold text-white uppercase">Solicitar Orçamento</h2><p class="text-xs text-neon font-bold tracking-wider">PREENCHA PARA ATENDIMENTO RÁPIDO</p></div><i data-lucide="file-text" class="w-10 h-10 text-gray-500"></i>
+            </header>
+            <div class="bg-panel border border-border p-6 md:p-10 rounded-lg shadow-2xl relative overflow-hidden">
+                <form id="orcamentoForm" class="relative z-10 max-w-3xl mx-auto space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="cyber-label">NOME COMPLETO</label><input type="text" id="nome" required class="cyber-input" placeholder="Seu nome"></div><div><label class="cyber-label">CPF (Opcional)</label><input type="text" id="cpf" class="cyber-input" placeholder="000.000.000-00"></div></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="cyber-label">TELEFONE (WhatsApp)</label><input type="tel" id="telefone" required class="cyber-input" placeholder="(48) 99999-9999"></div><div><label class="cyber-label">TIPO DE APARELHO</label><select id="tipo" class="cyber-input bg-[#0a0a0a]"><option value="Celular">Celular</option><option value="Notebook">Notebook</option><option value="Tablet">Tablet/iPad</option><option value="Outro">Outro</option></select></div></div>
+                    <div><label class="cyber-label">MARCA E MODELO</label><input type="text" id="modelo" required class="cyber-input" placeholder="Ex: iPhone 11, Samsung S20..."></div>
+                    <div><label class="cyber-label">DEFEITO / PROBLEMA</label><textarea id="defeito" required rows="4" class="cyber-input" placeholder="Descreva o que está acontecendo..."></textarea></div>
+                    <button type="submit" id="btnEnviar" class="w-full bg-neon text-black font-black py-4 uppercase tracking-widest hover:bg-white transition-colors shadow-[0_0_20px_rgba(255,94,0,0.4)] flex justify-center items-center gap-2"><span id="btnText">ENVIAR SOLICITAÇÃO</span><i data-lucide="send" class="w-4 h-4"></i></button>
+                </form>
+                <div id="successMessage" class="hidden absolute inset-0 bg-panel z-20 flex flex-col items-center justify-center text-center p-8 animate-fade-in"><div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6"><i data-lucide="check" class="w-10 h-10 text-green-500"></i></div><h3 class="text-3xl font-display font-bold text-white mb-2">SOLICITAÇÃO ENVIADA!</h3><p class="text-gray-400 max-w-md">Recebemos seus dados com sucesso.</p><p class="text-neon font-bold text-lg mt-4 animate-pulse">Você será respondido em até 20 minutos.</p><button onclick="resetForm()" class="mt-8 text-xs text-gray-500 underline hover:text-white">Enviar outro orçamento</button></div>
+            </div>
+            <div class="h-24 md:hidden"></div>
+        </section>
+
+        <!-- 3. CELULARES -->
+        <section id="celular" class="tab-content hidden space-y-6">
+            <header class="flex items-center justify-between border-b border-border pb-4">
+                <div><h2 class="text-3xl font-display font-bold text-white uppercase">Manutenção Celular</h2><p class="text-xs text-neon font-bold tracking-wider">IPHONE & ANDROID (TODAS AS MARCAS)</p></div><i data-lucide="smartphone" class="w-10 h-10 text-gray-500"></i>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/telacelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="layers" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Troca de Tela</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Substituição de vidros e displays. Qualidade original.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/doccelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="plug" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Conectores</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Reparo de portas de carga com mau contato.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/cameracelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="camera" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Câmeras</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Substituição de lentes e módulos de câmera.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/transferenciacelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="arrow-left-right" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Backup & Dados</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Transferência segura entre aparelhos.</p></div></div>
+            </div>
+            <div class="mt-8 p-6 bg-panel border-l-4 border-neon text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 rounded-r-lg shadow-lg">
+                <div><p class="text-white font-bold uppercase text-sm tracking-wide">Trabalhamos com todos os modelos</p><p class="text-xs text-gray-400 mt-1">iPhone, Samsung S/A/M, Xiaomi Redmi/Poco, Motorola G/Edge</p></div>
+                <a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20cotar%20manuten%C3%A7%C3%A3o%20para%20meu%20celular." target="_blank" class="bg-neon text-black px-8 py-3 text-xs font-bold uppercase hover:bg-white transition-colors rounded-sm shadow-lg shadow-neon/20">Cotar Modelo</a>
+            </div>
+        </section>
+
+        <!-- 4. NOTEBOOK -->
+        <section id="notebook" class="tab-content hidden space-y-6">
+            <header class="flex items-center justify-between border-b border-border pb-4">
+                <div><h2 class="text-3xl font-display font-bold text-white uppercase">Manutenção Notebook</h2><p class="text-xs text-neon font-bold tracking-wider">HARDWARE, SOFTWARE & UPGRADE</p></div><i data-lucide="laptop" class="w-10 h-10 text-gray-500"></i>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/telanotebook.jpg" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="monitor" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Telas de Notebook</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Telas LED e LCD para todas as marcas.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/tecladonotebook.jpg" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="keyboard" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Teclados</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Troca de teclados com falha ou molhados.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/ssdnotebook.jpg" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="hard-drive" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Sistemas & SSD</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Formatação, Windows/Linux e Upgrades.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/dobradiçanotebook.jpg" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="fold-vertical" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Dobradiças</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Reconstrução estrutural de carcaças.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/backupnotebook.jpg" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="save" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Backup de Dados</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Recuperação de arquivos de HDs.</p></div></div>
+                <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/baterianotebook.jpg" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="zap" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Baterias</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Troca de baterias internas e externas.</p></div></div>
+            </div>
+            <div class="mt-8 p-6 bg-panel border-l-4 border-neon text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 rounded-r-lg shadow-lg">
+                <div><p class="text-white font-bold uppercase text-sm tracking-wide">Trabalhamos com todas as marcas</p><p class="text-xs text-gray-400 mt-1">Dell, Lenovo, Acer, HP, Samsung, MacBook</p></div>
+                <a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20cotar%20manuten%C3%A7%C3%A3o%20para%20meu%20notebook." target="_blank" class="bg-neon text-black px-8 py-3 text-xs font-bold uppercase hover:bg-white transition-colors rounded-sm shadow-lg shadow-neon/20">Cotar Notebook</a>
+            </div>
+        </section>
+
+        <!-- 5. VENDAS -->
+        <section id="vendas" class="tab-content hidden space-y-6">
+            <header class="flex items-center justify-between border-b border-border pb-4">
+                <div><h2 class="text-3xl font-display font-bold text-white uppercase">Acessórios & Aparelhos</h2><p class="text-xs text-neon font-bold tracking-wider">APARELHOS REVISADOS COM GARANTIA</p></div><i data-lucide="shopping-bag" class="w-10 h-10 text-gray-500"></i>
+            </header>
+            <div class="bg-[#151515] border border-border p-8 rounded-lg relative overflow-hidden shadow-xl">
+                <div class="relative z-10"><span class="text-neon text-[10px] font-bold uppercase tracking-[0.3em] mb-2 block">Seu Novo iphone é aqui </span><h3 class="text-3xl font-bold text-white mb-4">Troque seu aparelho hoje.</h3><p class="text-gray-300 text-sm max-w-md mb-6 font-medium">Aceitamos seu usado na troca. Aparelhos revisados por nossos técnicos, com garantia de loja e procedência verificada.</p><a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20saber%20os%20modelos%20que%20est%C3%A3o%20dispon%C3%ADveis%20para%20venda." target="_blank" class="inline-flex items-center gap-2 bg-white text-black font-bold px-6 py-3 hover:bg-neon uppercase text-xs transition-colors rounded-sm shadow-md">Ver Catálogo Atualizado <i data-lucide="arrow-right" class="w-4 h-4"></i></a></div>
+                <div class="absolute right-0 top-0 h-full w-2/3 opacity-30 bg-[url('https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=600&auto=format&fit=crop')] bg-cover bg-center mask-image-linear-gradient"></div>
+            </div>
+            <h3 class="text-white font-bold uppercase text-sm mt-8 mb-4 border-l-2 border-neon pl-2">Marcas Disponíveis</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                 <div class="group relative bg-panel border border-border p-6 overflow-hidden cursor-pointer hover:border-neon transition-all duration-300"><div class="absolute inset-0 bg-neon/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div><div class="relative z-10 flex flex-col items-center"><svg class="w-10 h-10 fill-gray-400 group-hover:fill-neon mb-3 transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.21-1.98 1.08-3.11-1.06.05-2.35.71-3.11 1.61-.69.82-1.27 2.13-1.09 3.27 1.19.09 2.4-.6 3.12-1.77z"/></svg><h4 class="text-white font-bold uppercase tracking-widest text-sm">APPLE</h4><p class="text-[10px] text-gray-500 mt-1 font-mono">SYSTEM: IOS</p><div class="w-full h-[1px] bg-gray-800 my-3 group-hover:bg-neon/50 transition-colors"></div><div class="flex justify-between w-full text-[9px] text-gray-400 font-mono"><span>STATUS:</span><span class="text-neon">VERIFIED</span></div></div><div class="absolute top-0 left-0 w-full h-1 bg-neon/50 shadow-[0_0_10px_#FF5E00] -translate-y-full group-hover:translate-y-[200px] transition-transform duration-1000 delay-100"></div></div>
+                 <div class="group relative bg-panel border border-border p-6 overflow-hidden cursor-pointer hover:border-neon transition-all duration-300"><div class="absolute inset-0 bg-neon/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div><div class="relative z-10 flex flex-col items-center"><i data-lucide="smartphone" class="w-10 h-10 text-gray-400 group-hover:text-neon mb-3 transition-colors"></i><h4 class="text-white font-bold uppercase tracking-widest text-sm">SAMSUNG</h4><p class="text-[10px] text-gray-500 mt-1 font-mono">SYSTEM: ONE UI</p><div class="w-full h-[1px] bg-gray-800 my-3 group-hover:bg-neon/50 transition-colors"></div><div class="flex justify-between w-full text-[9px] text-gray-400 font-mono"><span>STATUS:</span><span class="text-neon">VERIFIED</span></div></div><div class="absolute top-0 left-0 w-full h-1 bg-neon/50 shadow-[0_0_10px_#FF5E00] -translate-y-full group-hover:translate-y-[200px] transition-transform duration-1000 delay-100"></div></div>
+                 <div class="group relative bg-panel border border-border p-6 overflow-hidden cursor-pointer hover:border-neon transition-all duration-300"><div class="absolute inset-0 bg-neon/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div><div class="relative z-10 flex flex-col items-center"><i data-lucide="smartphone" class="w-10 h-10 text-gray-400 group-hover:text-neon mb-3 transition-colors"></i><h4 class="text-white font-bold uppercase tracking-widest text-sm">XIAOMI</h4><p class="text-[10px] text-gray-500 mt-1 font-mono">SYSTEM: HYPER OS</p><div class="w-full h-[1px] bg-gray-800 my-3 group-hover:bg-neon/50 transition-colors"></div><div class="flex justify-between w-full text-[9px] text-gray-400 font-mono"><span>STATUS:</span><span class="text-neon">VERIFIED</span></div></div><div class="absolute top-0 left-0 w-full h-1 bg-neon/50 shadow-[0_0_10px_#FF5E00] -translate-y-full group-hover:translate-y-[200px] transition-transform duration-1000 delay-100"></div></div>
+                 <div class="group relative bg-panel border border-border p-6 overflow-hidden cursor-pointer hover:border-neon transition-all duration-300"><div class="absolute inset-0 bg-neon/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div><div class="relative z-10 flex flex-col items-center"><i data-lucide="smartphone" class="w-10 h-10 text-gray-400 group-hover:text-neon mb-3 transition-colors"></i><h4 class="text-white font-bold uppercase tracking-widest text-sm">MOTOROLA</h4><p class="text-[10px] text-gray-500 mt-1 font-mono">SYSTEM: ANDROID</p><div class="w-full h-[1px] bg-gray-800 my-3 group-hover:bg-neon/50 transition-colors"></div><div class="flex justify-between w-full text-[9px] text-gray-400 font-mono"><span>STATUS:</span><span class="text-neon">VERIFIED</span></div></div><div class="absolute top-0 left-0 w-full h-1 bg-neon/50 shadow-[0_0_10px_#FF5E00] -translate-y-full group-hover:translate-y-[200px] transition-transform duration-1000 delay-100"></div></div>
+            </div>
+            <h3 class="text-white font-bold uppercase text-sm mt-12 mb-4 border-l-2 border-neon pl-2 flex items-center gap-2"><i data-lucide="box" class="w-4 h-4 text-neon"></i> Acessórios Indispensáveis</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                 <div class="group relative bg-panel border border-border overflow-hidden h-48 cursor-pointer hover:border-neon transition-all rounded-lg shadow-md"><img src="https://images.unsplash.com/photo-1603921326210-6edd2d60ca68?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 flex flex-col justify-end"><h4 class="text-white font-bold uppercase">Capas & Cases</h4><p class="text-[10px] text-gray-300 mb-2">Proteção Anti-Impacto</p><a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20ver%20o%20estoque%20de%20Capas." target="_blank" class="text-neon text-[10px] font-bold border border-neon w-fit px-2 py-1 hover:bg-neon hover:text-black transition-colors bg-black/50">VER ESTOQUE</a></div></div>
+                 <div class="group relative bg-panel border border-border overflow-hidden h-48 cursor-pointer hover:border-neon transition-all rounded-lg shadow-md"><img src="https://images.unsplash.com/photo-1592434134753-a70baf7979d5?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 flex flex-col justify-end"><h4 class="text-white font-bold uppercase">Películas</h4><p class="text-[10px] text-gray-300 mb-2">Vidro 3D e Hidrogel</p><a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20ver%20o%20estoque%20de%20Pel%C3%ADculas." target="_blank" class="text-neon text-[10px] font-bold border border-neon w-fit px-2 py-1 hover:bg-neon hover:text-black transition-colors bg-black/50">VER ESTOQUE</a></div></div>
+                 <div class="group relative bg-panel border border-border overflow-hidden h-48 cursor-pointer hover:border-neon transition-all rounded-lg shadow-md"><img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 flex flex-col justify-end"><h4 class="text-white font-bold uppercase">Energia</h4><p class="text-[10px] text-gray-300 mb-2">Fontes Turbo & Cabos</p><a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20ver%20o%20estoque%20de%20Carregadores." target="_blank" class="text-neon text-[10px] font-bold border border-neon w-fit px-2 py-1 hover:bg-neon hover:text-black transition-colors bg-black/50">VER ESTOQUE</a></div></div>
+                 <div class="group relative bg-panel border border-border overflow-hidden h-48 cursor-pointer hover:border-neon transition-all rounded-lg shadow-md"><img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-500"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 flex flex-col justify-end"><h4 class="text-white font-bold uppercase">Áudio</h4><p class="text-[10px] text-gray-300 mb-2">Fones TWS & Headsets</p><a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20ver%20o%20estoque%20de%20%C3%81udio." target="_blank" class="text-neon text-[10px] font-bold border border-neon w-fit px-2 py-1 hover:bg-neon hover:text-black transition-colors bg-black/50">VER ESTOQUE</a></div></div>
+            </div>
+        </section>
+
+        <!-- 6. LOCATION -->
+        <section id="location" class="tab-content hidden space-y-6 h-full pb-20">
+             <header class="flex items-center justify-between border-b border-border pb-4">
+                <div><h2 class="text-3xl font-display font-bold text-white uppercase">Localização</h2><p class="text-xs text-neon font-bold tracking-wider">COORDENADAS GPS</p></div><i data-lucide="crosshair" class="w-10 h-10 text-red-500 animate-pulse"></i>
+            </header>
+            
+            <div class="flex gap-4 mb-6">
+                <button onclick="switchLoc('office')" id="btn-office" class="loc-btn active">UNIDADE: MATRIZ (CENTRO)</button>
+                <button onclick="switchLoc('box94')" id="btn-box94" class="loc-btn">UNIDADE: CAMELÓDROMO (BOX 94)</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+                <div class="bg-panel border border-border p-6 space-y-8 rounded-lg shadow-lg relative">
+                    <div id="info-office">
+                        <div><label class="text-gray-500 text-xs font-mono block mb-2 font-bold">ENDEREÇO</label><p class="text-white font-bold text-lg">R. Jerônimo Coelho, 95</p><p class="text-gray-400">2º Andar, Sala 210</p><p class="text-gray-400">Centro, Florianópolis - SC</p><p class="text-[10px] text-gray-500 mt-1">CEP 88030-010</p></div>
+                        <div class="mt-8"><label class="text-gray-500 text-xs font-mono block mb-2 font-bold">HORÁRIO</label><div class="flex justify-between border-b border-gray-800 py-2"><span class="text-white">Seg - Sex</span><span class="text-neon font-bold">09:00 - 18:00</span></div><div class="flex justify-between border-b border-gray-800 py-2"><span class="text-white">Sábado</span><span class="text-neon font-bold">09:00 - 13:00</span></div></div>
+                        <a href="https://www.google.com/maps/dir//R.+Jer%C3%B4nimo+Coelho,+95+-+Centro,+Florian%C3%B3polis+-+SC,+88010-030" target="_blank" class="mt-8 block w-full bg-white text-black text-center py-3 font-bold uppercase hover:bg-gray-300 rounded-sm shadow-lg">Traçar Rota</a>
+                    </div>
+                    <div id="info-box94" class="hidden">
+                        <div><label class="text-gray-500 text-xs font-mono block mb-2 font-bold">ENDEREÇO</label><p class="text-white font-bold text-lg">Camelódromo Municipal</p><p class="text-gray-400">R. Francisco Tolentino - Centro</p><p class="text-neon font-black text-xl mt-2 border border-neon inline-block px-2">BOX 94</p><p class="text-[10px] text-gray-500 mt-1">Florianópolis - SC</p></div>
+                        <div class="mt-8"><label class="text-gray-500 text-xs font-mono block mb-2 font-bold">HORÁRIO</label><div class="flex justify-between border-b border-gray-800 py-2"><span class="text-white">Seg - Sex</span><span class="text-neon font-bold">08:30 - 19:00</span></div><div class="flex justify-between border-b border-gray-800 py-2"><span class="text-white">Sábado</span><span class="text-neon font-bold">08:30 - 14:00</span></div></div>
+                        <a href="https://maps.app.goo.gl/JsS3WsoNtPtxsCXQ9" target="_blank" class="mt-8 block w-full bg-white text-black text-center py-3 font-bold uppercase hover:bg-gray-300 rounded-sm shadow-lg">Traçar Rota</a>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-                    <div class="border border-border bg-panel p-6 hover:border-neon transition-colors rounded-lg shadow-lg group">
-                        <div class="flex justify-between items-start mb-4"><i data-lucide="zap" class="text-neon w-6 h-6 group-hover:animate-pulse"></i><span class="text-xs text-gray-500 font-bold tracking-wider">VELOCIDADE</span></div>
-                        <h3 class="text-white font-bold text-xl mb-1">Express 40min</h3><p class="text-xs text-gray-400">Trocas de tela e bateria em tempo recorde.</p>
-                    </div>
-                    <div class="border border-border bg-panel p-6 hover:border-neon transition-colors rounded-lg shadow-lg group">
-                        <div class="flex justify-between items-start mb-4"><i data-lucide="shield-check" class="text-neon w-6 h-6 group-hover:animate-pulse"></i><span class="text-xs text-gray-500 font-bold tracking-wider">SEGURANÇA</span></div>
-                        <h3 class="text-white font-bold text-xl mb-1">Garantia Estendida</h3><p class="text-xs text-gray-400">90 dias de cobertura total em peças.</p>
-                    </div>
-                    <div class="border border-border bg-panel p-6 hover:border-neon transition-colors rounded-lg shadow-lg group">
-                        <div class="flex justify-between items-start mb-4"><i data-lucide="calendar-clock" class="text-neon w-6 h-6 group-hover:animate-pulse"></i><span class="text-xs text-gray-500 font-bold tracking-wider">HISTÓRIA</span></div>
-                        <h3 class="text-white font-bold text-xl mb-1">+25 Anos</h3><p class="text-xs text-gray-400">Tradição e confiança desde 1999 em Florianópolis.</p>
-                    </div>
+                <div class="lg:col-span-2 border border-neon/30 relative bg-black p-1 rounded-lg overflow-hidden shadow-xl">
+                    <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-neon z-10"></div><div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-neon z-10"></div>
+                    <iframe id="map-office" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.276275476873!2d-48.5533485!3d-27.5947447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952738201820318d%3A0x7c72b72879d00721!2sR.%20Jer%C3%B4nimo%20Coelho%2C%2095%20-%20Centro%2C%20Florian%C3%B3polis%20-%20SC%2C%2088010-030!5e0!3m2!1spt-BR!2sbr!4v1708455000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="w-full h-full min-h-[300px] rounded-lg"></iframe>
+                    <iframe id="map-box94" class="hidden w-full h-full min-h-[300px] rounded-lg" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.343769053987!2d-48.55187492451662!3d-27.59265337624864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95273826468650b9%3A0x55b6135352839736!2sCamel%C3%B3dromo%20Municipal%20de%20Florian%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1708455000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
+            </div>
+            
+            <div class="h-40 md:hidden"></div>
+        </section>
 
-                <div class="relative mt-8 border-2 border-dashed border-neon/30 bg-panel overflow-hidden hover:border-neon transition-all duration-500 group rounded-lg">
-                    <div class="absolute top-0 right-0 bg-neon text-black text-[10px] font-bold px-4 py-1 font-display uppercase z-20 rounded-bl-lg">Academy Module</div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2">
-                        <div class="p-8 flex flex-col justify-center relative z-10">
-                            <div class="flex items-center gap-2 mb-4"><span class="w-2 h-2 bg-neon rounded-full animate-ping"></span><span class="text-neon text-xs font-bold tracking-widest uppercase">Inscrições Abertas</span></div>
-                            <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4 uppercase leading-none">Curso Técnico de <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-yellow-400">Manutenção</span></h2>
-                            <p class="text-gray-300 text-sm mb-6 leading-relaxed font-medium">Nosso curso te ensinará do básico até reparos simples em placas utilizando <strong class="text-white">Micro-soldagem!</strong><br><br>Além do conhecimento e experiência que você irá adquirir, você ainda garante um <strong class="text-neon">CERTIFICADO</strong> de conclusão.</p>
-                            <a href="https://wa.me/554830252210?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20quero%20saber%20mais%20sobre%20o%20Curso%20T%C3%A9cnico." target="_blank" class="mt-4 inline-flex w-fit items-center gap-3 bg-white text-black font-bold px-8 py-3 hover:bg-neon hover:text-white transition-all uppercase text-sm shadow-lg shadow-white/10 hover:shadow-neon/50 rounded-sm">Garantir Minha Vaga <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                        </div>
-                        <div class="relative min-h-[300px] border-t lg:border-t-0 lg:border-l border-border bg-[#151515] overflow-hidden" id="carouselContainer">
-                            <img src="fotos/jmicro.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover active" alt="Microscópio">
-                            <img src="fotos/lab.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover" alt="Laboratório">
-                            <img src="fotos/certificado.jpg" class="carousel-img absolute inset-0 w-full h-full object-cover" alt="Certificado">
-                            <div class="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-panel to-transparent pointer-events-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. ORÇAMENTO -->
-            <section id="orcamento" class="tab-content hidden space-y-6">
-                <header class="flex items-center justify-between border-b border-border pb-4">
-                    <div><h2 class="text-3xl font-display font-bold text-white uppercase">Solicitar Orçamento</h2><p class="text-xs text-neon font-bold tracking-wider">PREENCHA PARA ATENDIMENTO RÁPIDO</p></div><i data-lucide="file-text" class="w-10 h-10 text-gray-500"></i>
-                </header>
-                <div class="bg-panel border border-border p-6 md:p-10 rounded-lg shadow-2xl relative overflow-hidden">
-                    <form id="orcamentoForm" class="relative z-10 max-w-3xl mx-auto space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="cyber-label">NOME COMPLETO</label><input type="text" id="nome" required class="cyber-input" placeholder="Seu nome"></div><div><label class="cyber-label">CPF (Opcional)</label><input type="text" id="cpf" class="cyber-input" placeholder="000.000.000-00"></div></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="cyber-label">TELEFONE (WhatsApp)</label><input type="tel" id="telefone" required class="cyber-input" placeholder="(48) 99999-9999"></div><div><label class="cyber-label">TIPO DE APARELHO</label><select id="tipo" class="cyber-input bg-[#0a0a0a]"><option value="Celular">Celular</option><option value="Notebook">Notebook</option><option value="Tablet">Tablet/iPad</option><option value="Outro">Outro</option></select></div></div>
-                        <div><label class="cyber-label">MARCA E MODELO</label><input type="text" id="modelo" required class="cyber-input" placeholder="Ex: iPhone 11, Samsung S20..."></div>
-                        <div><label class="cyber-label">DEFEITO / PROBLEMA</label><textarea id="defeito" required rows="4" class="cyber-input" placeholder="Descreva o que está acontecendo..."></textarea></div>
-                        <button type="submit" id="btnEnviar" class="w-full bg-neon text-black font-black py-4 uppercase tracking-widest hover:bg-white transition-colors shadow-[0_0_20px_rgba(255,94,0,0.4)] flex justify-center items-center gap-2"><span id="btnText">ENVIAR SOLICITAÇÃO</span><i data-lucide="send" class="w-4 h-4"></i></button>
-                    </form>
-                    <div id="successMessage" class="hidden absolute inset-0 bg-panel z-20 flex flex-col items-center justify-center text-center p-8 animate-fade-in"><div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6"><i data-lucide="check" class="w-10 h-10 text-green-500"></i></div><h3 class="text-3xl font-display font-bold text-white mb-2">SOLICITAÇÃO ENVIADA!</h3><p class="text-gray-400 max-w-md">Recebemos seus dados com sucesso.</p><p class="text-neon font-bold text-lg mt-4 animate-pulse">Você será respondido em até 20 minutos.</p><button onclick="resetForm()" class="mt-8 text-xs text-gray-500 underline hover:text-white">Enviar outro orçamento</button></div>
-                </div>
-                <div class="h-24 md:hidden"></div>
-            </section>
-
-            <!-- 3. CELULARES -->
-            <section id="celular" class="tab-content hidden space-y-6">
-                <header class="flex items-center justify-between border-b border-border pb-4">
-                    <div><h2 class="text-3xl font-display font-bold text-white uppercase">Manutenção Celular</h2><p class="text-xs text-neon font-bold tracking-wider">IPHONE & ANDROID (TODAS AS MARCAS)</p></div><i data-lucide="smartphone" class="w-10 h-10 text-gray-500"></i>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/telacelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="layers" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Troca de Tela</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Substituição de vidros e displays. Qualidade original.</p></div></div>
-                    <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><img src="fotos/bateriacelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="battery-charging" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Troca de Bateria</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Revitalize seu aparelho com baterias 100% saúde.</p></div></div>
-                    <div class="group relative bg-panel border border-border overflow-hidden h-56 rounded-lg shadow-md transition-all hover:border-neon"><div class="absolute top-0 right-0 bg-neon text-black text-[9px] font-bold px-2 py-1 z-10">ESPECIALIDADE</div><img src="fotos/placacelular.png" class="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 flex flex-col justify-end"><i data-lucide="cpu" class="w-8 h-8 text-neon mb-2"></i><h3 class="text-white font-bold uppercase text-lg">Reparo Avançado</h3><p class="text-xs text-gray-300 mb-3 line-clamp-2">Microsoldagem para aparelhos mortos ou com curto.</p></div></div>
-                </div>
-                <div class="h-24 md:hidden"></div>
-            </section>
-
-            <!-- 4. NOTEBOOKS -->
-            <section id="notebook" class="tab-content hidden space-y-6">
-                <header class="flex items-center justify-between border-b border-border pb-4">
-                    <div><h2 class="text-3xl font-display font-bold text-white uppercase">Manutenção Notebook</h2><p class="text-xs text-neon font-bold tracking-wider">TODOS OS MODELOS</p></div><i data-lucide="monitor" class="w-10 h-10 text-gray-500"></i>
-                </header>
-                <div class="h-24 md:hidden"></div>
-            </section>
-
-            <!-- 5. VENDAS -->
-            <section id="vendas" class="tab-content hidden space-y-6">
-                <header class="flex items-center justify-between border-b border-border pb-4">
-                    <div><h2 class="text-3xl font-display font-bold text-white uppercase">Vendas</h2><p class="text-xs text-neon font-bold tracking-wider">CELULARES E NOTEBOOKS USADOS</p></div><i data-lucide="shopping-cart" class="w-10 h-10 text-gray-500"></i>
-                </header>
-                <div class="h-24 md:hidden"></div>
-            </section>
-
-            <!-- 6. LOCALIZAÇÃO -->
-            <section id="location" class="tab-content hidden space-y-6">
-                <header class="flex items-center justify-between border-b border-border pb-4">
-                    <div><h2 class="text-3xl font-display font-bold text-white uppercase">Localização</h2><p class="text-xs text-neon font-bold tracking-wider">ENCONTRE NOSSA LOJA</p></div><i data-lucide="map" class="w-10 h-10 text-gray-500"></i>
-                </header>
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <button id="btn-office" onclick="switchLoc('office')" class="loc-btn active">Loja Principal</button>
-                    <button id="btn-box94" onclick="switchLoc('box94')" class="loc-btn">Box 94</button>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div id="info-office" class="bg-panel border border-border p-6 rounded-lg">
-                        <h3 class="text-neon font-bold text-lg mb-4">Loja Principal</h3>
-                        <p class="text-gray-300 mb-2"><strong>Endereço:</strong> Rua Exemplo, 123 - Florianópolis</p>
-                        <p class="text-gray-300 mb-2"><strong>Telefone:</strong> (48) 3025-2210</p>
-                        <p class="text-gray-300"><strong>Horário:</strong> Seg-Sex 9h-18h | Sab 9h-13h</p>
-                    </div>
-                    <div id="info-box94" class="hidden bg-panel border border-border p-6 rounded-lg">
-                        <h3 class="text-neon font-bold text-lg mb-4">Box 94</h3>
-                        <p class="text-gray-300 mb-2"><strong>Endereço:</strong> Camelódromo Municipal, Box 94</p>
-                        <p class="text-gray-300 mb-2"><strong>Telefone:</strong> (48) 3025-2210</p>
-                        <p class="text-gray-300"><strong>Horário:</strong> Seg-Sex 9h-18h | Sab 9h-13h</p>
-                    </div>
-                    <iframe id="map-office" class="w-full h-full min-h-[300px] rounded-lg col-span-1 lg:col-span-2" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.343769053987!2d-48.55187492451662!3d-27.59265337624864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95273826468650b9%3A0x55b6135352839736!2sCamel%C3%B3dromo%20Municipal%20de%20Florian%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1708455000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    <iframe id="map-box94" class="hidden w-full h-full min-h-[300px] rounded-lg col-span-1 lg:col-span-2" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.343769053987!2d-48.55187492451662!3d-27.59265337624864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95273826468650b9%3A0x55b6135352839736!2sCamel%C3%B3dromo%20Municipal%20de%20Florian%C3%B3polis!5e0!3m2!1spt-BR!2sbr!4v1708455000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-                
-                <div class="h-40 md:hidden"></div>
-            </section>
-
-        </div>
     </main>
 
     <script type="module">
@@ -378,7 +419,7 @@
 
       updateVisitorCounter();
 
-      // 2. ORÇAMENTO LOGIC - CORREÇÃO DEFINITIVA NTFY
+      // 2. ORÇAMENTO LOGIC - VERSÃO COMPATIBILIDADE NTFY
       const form = document.getElementById('orcamentoForm');
       const btnEnviar = document.getElementById('btnEnviar');
       const btnText = document.getElementById('btnText');
@@ -412,21 +453,13 @@
                   const { error: dbError } = await supabase.from('orcamentos').insert([data]);
                   if (dbError) throw new Error(`Erro no Banco: ${dbError.message}`);
 
-                  // 2. Enviar para ntfy.sh (Método PUT simplificado)
-                  const ntfyUrl = 'https://ntfy.sh/PhoneParts_leads';
-                  const message = `NOVO ORCAMENTO\n\nCliente: ${data.nome}\nAparelho: ${data.tipo_aparelho}\nModelo: ${data.marca_modelo}\nDefeito: ${data.defeito}\nTel: ${data.telefone}`;
+                  // 2. Enviar para ntfy.sh (Método de compatibilidade total via URL)
+                  const title = encodeURIComponent('Nova Solicitacao Phone Parts');
+                  const message = encodeURIComponent(`Cliente: ${data.nome}\nAparelho: ${data.tipo_aparelho}\nModelo: ${data.marca_modelo}\nDefeito: ${data.defeito}\nTel: ${data.telefone}`);
+                  const ntfyUrl = `https://ntfy.sh/PhoneParts_leads/publish?message=${message}&title=${title}&priority=urgent&tags=iphone,moneybag`;
 
                   try {
-                      // Usando PUT e cabeçalhos mínimos para evitar bloqueio CORS
-                      await fetch(ntfyUrl, {
-                          method: 'PUT',
-                          body: message,
-                          headers: {
-                              'Title': 'Nova Solicitacao Phone Parts',
-                              'Priority': 'urgent',
-                              'Tags': 'iphone,moneybag'
-                          }
-                      });
+                      await fetch(ntfyUrl, { method: 'GET', mode: 'no-cors' });
                   } catch (ntfyErr) {
                       console.warn('Erro ntfy:', ntfyErr);
                   }
