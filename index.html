@@ -189,13 +189,6 @@
                 <span class="text-[10px] md:text-sm font-bold uppercase tracking-wide">Vendas</span>
             </button>
 
-            <button onclick="switchTab('vendas')" class="...">...</button>
-
-<button onclick="switchTab('orcamento')" class="tab-btn flex flex-col md:flex-row items-center md:px-6 py-3 gap-3 hover:bg-white/5 transition-all group w-full text-center md:text-left border-b md:border-b-0 border-gray-800/50">
-    <i data-lucide="clipboard-list" class="w-5 h-5 text-gray-400 group-hover:text-neon transition-colors"></i>
-    <span class="text-[10px] md:text-sm font-bold uppercase tracking-wide">Orçamento</span>
-</button>
-
             <button onclick="switchTab('location')" class="tab-btn flex flex-col md:flex-row items-center md:px-6 py-3 gap-3 hover:bg-white/5 transition-all group w-full text-center md:text-left">
                 <i data-lucide="map" class="w-5 h-5 text-gray-400 group-hover:text-neon transition-colors"></i>
                 <span class="text-[10px] md:text-sm font-bold uppercase tracking-wide">Local GPS</span>
@@ -700,87 +693,133 @@
         </section>
 
     </main>
-  
 
-        <script type="module">
-    // 1. IMPORTAÇÃO E BANCO (A 'ponte' necessária)
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+    <script>
+        lucide.createIcons();
 
-    const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
-    const supabaseKey = 'SUA_CHAVE_LEGACY_ANON_GIGANTE'; // Aquela que começa com 'ey...'
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Inicializa ícones do site
-    lucide.createIcons();
-
-    // 2. LÓGICA DE NAVEGAÇÃO (switchTab original - corrigida)
-    window.switchTab = function(tabId) {
-        const mainContainer = document.getElementById('mainDisplay');
-        if (!mainContainer) return;
-
-        mainContainer.classList.add('cyber-transition');
-
-        setTimeout(() => {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active', 'text-neon');
-            });
-
-            const target = document.getElementById(tabId);
-            if (target) target.classList.remove('hidden');
-
-            mainContainer.classList.remove('cyber-transition');
-        }, 150);
-    };
-
-    // 3. EFEITO VISUAL DO CIRCUITO (Animate original)
-    const canvas = document.getElementById('circuitCanvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let points = []; // Insira aqui sua lógica de pontos se necessário
-
-        window.animate = function() {
-            if (!document.getElementById('home').classList.contains('hidden')) {
-                requestAnimationFrame(animate);
-            }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // ... resto da sua lógica de desenho do canvas
-        };
-        animate();
-    }
-
-    // 4. LÓGICA DO FORMULÁRIO (O que faltava para salvar os dados)
-    const budgetForm = document.getElementById('budgetForm');
-    if (budgetForm) {
-        budgetForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btn-submit');
+        function switchTab(tabId) {
+            const mainContainer = document.getElementById('mainDisplay');
             
-            btn.disabled = true;
-            btn.innerText = "REGISTRANDO...";
+            // 1. INICIA EFEITO "CYBER WARP"
+            mainContainer.classList.add('cyber-transition');
 
-            const formData = {
-                nome: document.getElementById('orc-name').value,
-                whatsapp: document.getElementById('orc-whatsapp').value,
-                modelo: document.getElementById('orc-model').value,
-                defeito: document.getElementById('orc-problem').value,
-                tipo_aparelho: document.getElementById('orc-type').value
-            };
+            // 2. TROCA O CONTEÚDO NO MEIO DA ANIMAÇÃO
+            setTimeout(() => {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    const icon = btn.querySelector('i');
+                    if(icon) icon.classList.remove('text-neon');
+                });
 
-            try {
-                const { error } = await supabase.from('orcamentos_site').insert([formData]);
-                if (error) throw error;
-                alert("Sucesso! Orçamento registrado.");
-                budgetForm.reset();
-            } catch (err) {
-                alert("Erro: " + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "REGISTRAR E ORÇAR";
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                const buttons = document.querySelectorAll(`button[onclick="switchTab('${tabId}')"]`);
+                buttons.forEach(btn => {
+                     btn.classList.add('active');
+                     const icon = btn.querySelector('i');
+                     if(icon) icon.classList.add('text-neon');
+                });
+
+                const selectedContent = document.getElementById(tabId);
+                if(selectedContent) {
+                    selectedContent.classList.remove('hidden');
+                }
+                
+                if (tabId === 'home') {
+                    initCircuitCanvas();
+                }
+
+                // 3. REMOVE A CLASSE PARA PODER USAR NOVAMENTE
+                setTimeout(() => {
+                    mainContainer.classList.remove('cyber-transition');
+                }, 100);
+
+            }, 150); // 150ms = metade da animação de 300ms
+        }
+
+        function switchLoc(locId) {
+            // Alternar Botões
+            document.querySelectorAll('.loc-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + locId).classList.add('active');
+
+            // Alternar Informações
+            document.getElementById('info-office').classList.add('hidden');
+            document.getElementById('info-box94').classList.add('hidden');
+            document.getElementById('info-' + locId).classList.remove('hidden');
+
+            // Alternar Mapas
+            document.getElementById('map-office').classList.add('hidden');
+            document.getElementById('map-box94').classList.add('hidden');
+            document.getElementById('map-' + locId).classList.remove('hidden');
+        }
+
+        window.onload = function() {
+            initCircuitCanvas();
+            
+            // Carousel Logic
+            const images = document.querySelectorAll('.carousel-img');
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                images[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.add('active');
+            }, 4000);
+        }
+
+        function initCircuitCanvas() {
+            const canvas = document.getElementById('circuitCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = canvas.parentElement.offsetWidth;
+            let height = canvas.height = canvas.parentElement.offsetHeight;
+            
+            const points = [];
+            for(let i=0; i<20; i++) {
+                points.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5
+                });
             }
-        });
-    }
-</script>
+            
+            function animate() {
+                if(!document.getElementById('home').classList.contains('hidden')) {
+                    requestAnimationFrame(animate);
+                }
+                ctx.clearRect(0, 0, width, height);
+                ctx.strokeStyle = 'rgba(255, 94, 0, 0.2)';
+                ctx.lineWidth = 1;
+                
+                for(let i=0; i<points.length; i++) {
+                    let p = points[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if(p.x < 0 || p.x > width) p.vx *= -1;
+                    if(p.y < 0 || p.y > height) p.vy *= -1;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+                    ctx.fillStyle = '#FF5E00';
+                    ctx.fill();
+                    
+                    for(let j=i+1; j<points.length; j++) {
+                        let p2 = points[j];
+                        let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                        if(dist < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+            animate();
             
             window.addEventListener('resize', () => {
                 width = canvas.width = canvas.parentElement.offsetWidth;
@@ -788,69 +827,5 @@
             });
         }
     </script>
-<script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-    // Use exatamente estes dados que conferi nas suas fotos
-    const supabaseUrl = 'https://rgkxplbvlerpfnvxhxqq.supabase.co'; //
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJna3hwbGJ2bGVybXBmdnZoeHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzE1MDMsImV4cCI6MjA4Mzk0NzUwM30.-QjYsddysonxd5Wa0KUGe7hl59Vkg1-TjFwbe6wYo4s'; //
-    const ntfyTopic = 'PhoneParts_leads'; 
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    document.getElementById('budgetForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('btn-submit');
-        const btnText = document.getElementById('btn-text');
-        
-        btn.disabled = true;
-        btnText.innerText = "CONECTANDO...";
-
-        const formData = {
-            nome: document.getElementById('orc-name').value,
-            cpf: document.getElementById('orc-cpf').value,
-            whatsapp: document.getElementById('orc-whatsapp').value,
-            tipo_aparelho: document.getElementById('orc-type').value,
-            modelo: document.getElementById('orc-model').value,
-            defeito: document.getElementById('orc-problem').value
-        };
-
-        try {
-            // Tentativa 1: Salvar no Banco
-            const { data, error } = await supabase.from('orcamentos_site').insert([formData]).select();
-            
-            if (error) throw new Error("Erro Supabase: " + error.message);
-
-            // Tentativa 2: Notificar no Celular (ntfy)
-            // Se o ntfy falhar, o banco já salvou, então avisamos o usuário
-            try {
-                await fetch(`https://ntfy.sh/${ntfyTopic}`, {
-                    method: 'POST',
-                    body: `Cliente: ${formData.nome}\nAparelho: ${formData.modelo}\nDefeito: ${formData.defeito}`,
-                    headers: { 'Title': '🚀 NOVO ORÇAMENTO' }
-                });
-            } catch (ntfyErr) {
-                console.warn("Aviso no celular falhou, mas o banco salvou.");
-            }
-
-            alert("Sucesso! Orçamento registrado no sistema.");
-            document.getElementById('budgetForm').reset();
-
-        } catch (err) {
-            console.error('Erro detalhado:', err);
-            // Isso vai mostrar se o erro é URL errada ou bloqueio de rede
-            alert("Atenção: " + err.message + ". Verifique se há algum AdBlock ativo.");
-        } finally {
-            btn.disabled = false;
-            btnText.innerText = "REGISTRAR E ORÇAR";
-        }
-    });
-</script>
-
-
-
-
-
-
-
-
+</body>
+</html>
