@@ -378,7 +378,7 @@
 
       updateVisitorCounter();
 
-      // 2. ORÇAMENTO LOGIC - CORRIGIDO PARA NOMES DE COLUNAS DO SUPABASE
+      // 2. ORÇAMENTO LOGIC - INTEGRADO COM SUPABASE E NTFY.SH
       const form = document.getElementById('orcamentoForm');
       const btnEnviar = document.getElementById('btnEnviar');
       const btnText = document.getElementById('btnText');
@@ -397,7 +397,6 @@
               btnEnviar.disabled = true;
               btnText.innerText = 'ENVIANDO DADOS...';
 
-              // NOMES DAS COLUNAS DEVEM SER EXATAMENTE IGUAIS AOS DO SUPABASE
               const data = {
                   nome: document.getElementById('nome').value,
                   cpf: document.getElementById('cpf').value || null,
@@ -414,10 +413,10 @@
                   
                   if (dbError) {
                       console.error('Erro detalhado do Supabase:', dbError);
-                      let msg = `Erro (${dbError.code}): ${dbError.message}`;
-                      if (dbError.code === 'PGRST116') msg = 'Tabela "orcamentos" não encontrada.';
-                      if (dbError.code === '42P01') msg = 'Tabela "orcamentos" não existe no banco.';
-                      if (dbError.code === '42501') msg = 'Permissão negada (RLS). Verifique as políticas no Supabase.';
+                      let msg = 'Erro ao salvar no banco de dados.';
+                      if (dbError.code === 'PGRST116') msg = 'Tabela "orcamentos" não encontrada. Verifique se criou a tabela no SQL Editor.';
+                      if (dbError.code === '42P01') msg = 'Tabela "orcamentos" não existe no Supabase.';
+                      if (dbError.code === '42501') msg = 'Permissão negada (RLS). Verifique se habilitou a política de inserção pública.';
                       throw new Error(msg);
                   }
 
